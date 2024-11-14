@@ -12,12 +12,18 @@ class CelestialObject {
     this.col = c;
   }
   
-  void display() {
-    fill(this.col);
-    circle(this.pos.x, this.pos.y, 2 * this.r);
-    fill(0);
+   void update() {
+    vel.add(acc);
+    pos.add(vel);
   }
   
+  void display() {
+    fill(col);
+    noStroke();
+    ellipse(pos.x, pos.y, r * 2, r * 2);
+  }
+  
+   
   
   
 }
