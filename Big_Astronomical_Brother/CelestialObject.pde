@@ -17,4 +17,7 @@ class CelestialObject {
     circle(this.pos.x, this.pos.y, 2 * this.r);
     fill(0);
   }
+  
+  
+  
 }
