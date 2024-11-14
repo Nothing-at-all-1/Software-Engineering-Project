@@ -2,7 +2,7 @@ import g4p_controls.*;
 
 ArrayList<CelestialObject> celestialObjects;
 
-float scalingRatio = 10000;
+float scalingRatio = 10000;  //1 pixel is 10000km
 float timeStep = 60;
 
 void reset() {
@@ -16,16 +16,17 @@ void reset() {
 
 void setup() {
   size(600, 600);
-
+  //noLoop();
   reset();
 }
 
 void draw() {
   background(0);
   frameRate(timeStep);
-  
+
   for (CelestialObject obj : celestialObjects) {
     obj.display();
+    //obj.update();
   }
  
 }
