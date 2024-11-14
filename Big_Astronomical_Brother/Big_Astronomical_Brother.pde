@@ -1,11 +1,6 @@
 import g4p_controls.*;
 
-<<<<<<< Updated upstream
-Planet earth;
-ArrayList<CelestialObject> celestialObjects;
-=======
 ArrayList<Star> stars;
->>>>>>> Stashed changes
 
 void reset() {
   stars = new ArrayList<Star> ();
@@ -14,9 +9,7 @@ void reset() {
 
 void setup() {
   size(600, 600);
-  
-    //5.972f * pow(10, 24),  // Mass in kg (simulated)
-    //color(0, 100, 255)      // Color (Earth-like blue)
+
   reset();
 }
 
