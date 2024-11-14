@@ -1,2 +1,2 @@
-class Planet extends CelestialObject{
-}
+//class Planet extends CelestialObject{
+//}
