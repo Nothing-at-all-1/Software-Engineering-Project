@@ -1,8 +1,11 @@
 class CelestialObject {
-  float mass, r;
+  //fields that ASteroid, star and planet class also hold
+  float mass, r;  
   PVector pos, vel, acc;
   color col;
   
+  
+  //intializes the variables when it is created
   CelestialObject(float m, float r, PVector p, PVector v, PVector a, color c) {
     this.mass = m;
     this.r = r;

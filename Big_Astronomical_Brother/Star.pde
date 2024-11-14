@@ -1,5 +1,6 @@
 class Star extends CelestialObject{
   
+  //add temp as a field for this subclass only
   float temp;
 
   Star(float m, float r, PVector p, PVector v, PVector a, color c, float t){
