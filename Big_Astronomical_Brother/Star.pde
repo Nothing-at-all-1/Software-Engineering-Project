@@ -7,7 +7,7 @@ class Star extends CelestialObject{
     super(m, r, p, v, a, c);
     this.temp = t;
   
-    float colorMod = norm(temp, 2000, 30000);
+    float colorMod = norm(constrain(temp, 2000, 30000), 2000, 30000);
     
     color blue = color(175, 201, 255);
     
@@ -17,5 +17,7 @@ class Star extends CelestialObject{
     
     this.col = emission;
   }
+  
+  
 
 }
