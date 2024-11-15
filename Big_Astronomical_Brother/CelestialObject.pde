@@ -16,23 +16,23 @@ class CelestialObject {
   }
   
    void update() {
-    vel.add(acc);
-    pos.add(vel);
+    vel.add(PVector.div(acc, timeStep/100));
+    pos.add(PVector.div(vel, timeStep/100));
+    acc.setMag(0);
     
     for (CelestialObject other : celestialObjects){
       if (other != this){
         float g = 6.6743 * pow(10, -11);
         
-        float dist = dist(other.pos.x+other.r, other.pos.y+other.r, pos.x+r, pos.y+r) / 10000;  //this is technically what we should be using,
+        float distSq = PVector.sub(this.pos, other.pos).magSq() / pow(scalingFactor, 2);  //this is technically what we should be using,
         //but at our current scaling factor this would be like 14.7 thousand pixels offscreen so it doesn't work
         
         //float dist = 14798; 
         
-        float angle = PVector.sub(this.pos, other.pos).heading();
+        //float angle = PVector.sub(this.pos, other.pos).heading();
         
-        double f = (-g * this.mass * other.mass) / pow(dist, 2);
-        
-        float F = max((float)f, 0.000001);
+        float a = g * other.mass / distSq;
+       
         
         
       //  float distance = dist(pos.x, pos.y, other.pos.x, other.pos.y) - this.r - other.r;
@@ -42,18 +42,17 @@ class CelestialObject {
       //}
       //  float F = (g * this.mass * mass) / pow(distance, 2);
         
-      //  PVector direction = PVector.sub(other.pos, pos);  
-      //  direction.normalize();
+        PVector direction = PVector.sub(other.pos, pos);  
+        direction.normalize();
         
-      //  PVector force = direction.mult(F);
-      //  vel.add(force);
-        
+        acc.add(direction.mult(a));
         
         
-        vel.add(new PVector(sin(angle)*F, cos(angle)*F));
         
-        println(dist);
-        println(F);
+        //vel.add(new PVector(sin(angle)*F, cos(angle)*F));
+        
+        println(sqrt(distSq));
+        println(a);
         println(pos);
       }
     }
