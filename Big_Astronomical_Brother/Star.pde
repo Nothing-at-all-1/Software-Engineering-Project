@@ -18,6 +18,11 @@ class Star extends CelestialObject{
     this.col = emission;
   }
   
+  void update(){
+    float sb = 5.6704 * pow(10, -8);
+    
+    
   
+  }
 
 }
