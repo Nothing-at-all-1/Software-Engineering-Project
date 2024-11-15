@@ -30,7 +30,7 @@ class CelestialObject {
         
         float angle = PVector.sub(this.pos, other.pos).heading();
         
-        float F = (g * this.mass * other.mass) / pow(dist + this.r + other.r, 2);
+        float F = (-g * this.mass * other.mass) / pow(dist + this.r + other.r, 2);
         
         
         
