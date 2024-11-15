@@ -28,9 +28,9 @@ class CelestialObject {
         
         float dist = 14798; 
         
-        float angle = PVector.sub(other.pos, pos).heading();
+        float angle = PVector.sub(this.pos, other.pos).heading();
         
-        float F = (g * other.mass * mass) / pow(dist, 2);
+        float F = (g * this.mass * other.mass) / pow(dist + this.r + other.r, 2);
         
         
       //  float distance = dist(pos.x, pos.y, other.pos.x, other.pos.y) - this.r - other.r;
