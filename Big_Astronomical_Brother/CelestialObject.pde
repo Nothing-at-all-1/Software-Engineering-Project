@@ -33,6 +33,20 @@ class CelestialObject {
         float F = (g * other.mass * mass) / pow(dist, 2);
         
         
+      //  float distance = dist(pos.x, pos.y, other.pos.x, other.pos.y) - this.r - other.r;
+      
+      //  if (distance <= 0) {
+      //  distance = 1;  // Minimum distance to avoid infinite force (this is a safeguard)
+      //}
+      //  float F = (g * this.mass * mass) / pow(distance, 2);
+        
+      //  PVector direction = PVector.sub(other.pos, pos);  
+      //  direction.normalize();
+        
+      //  PVector force = direction.mult(F);
+      //  vel.add(force);
+        
+        
         
         vel.add(new PVector(sin(angle)*F, cos(angle)*F));
         
