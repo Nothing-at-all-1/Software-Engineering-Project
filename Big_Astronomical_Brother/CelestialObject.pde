@@ -3,7 +3,7 @@ class CelestialObject {
   float mass, r;  
   PVector pos, vel, acc;
   color col;
-  
+  float visualScaling;
   
   //Intializes the variables when it is created
   CelestialObject(float m, float r, PVector p, PVector v, PVector a, color c) {
@@ -23,14 +23,16 @@ class CelestialObject {
       if (other != this){
         float g = 6.6743 * pow(10, -11);
         
-        //float dist = dist(other.pos.x+other.r, other.pos.y+other.r, pos.x+r, pos.y+r);  //this is technically what we should be using,
+        float dist = dist(other.pos.x+other.r, other.pos.y+other.r, pos.x+r, pos.y+r) * 10000;  //this is technically what we should be using,
         //but at our current scaling factor this would be like 14.7 thousand pixels offscreen so it doesn't work
         
-        float dist = 14798; 
+        //float dist = 14798; 
         
         float angle = PVector.sub(this.pos, other.pos).heading();
         
-        float F = (-g * this.mass * other.mass) / pow(dist + this.r + other.r, 2);
+        double f = (-g * this.mass * other.mass) / pow(dist, 2);
+        
+        float F = (float) f;
         
         
       //  float distance = dist(pos.x, pos.y, other.pos.x, other.pos.y) - this.r - other.r;
@@ -59,7 +61,7 @@ class CelestialObject {
   void display() {
     fill(col);
     noStroke();
-    ellipse(pos.x, pos.y, r * 2, r * 2);
+    ellipse(pos.x, pos.y, r * 2*visualScaling, r * 2*visualScaling);
   }
   
 }

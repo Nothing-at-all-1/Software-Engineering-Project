@@ -16,6 +16,8 @@ class Star extends CelestialObject{
     color emission = lerpColor(yellow, blue, colorMod);
     
     this.col = emission;
+    
+    this.visualScaling = 1;
   }
   
   void update(){
