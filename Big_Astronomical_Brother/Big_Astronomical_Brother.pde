@@ -1,18 +1,15 @@
 import g4p_controls.*;
 
-ArrayList<CelestialObject> celestialObjects;
-
 float scalingRatio = 10000;  //1 pixel is 10000km
 float timeStep = 60;
 
-ArrayList<Star> stars;
-ArrayList<Planet> planets;
+ArrayList<CelestialObject> celestialObjects;
 
 void reset() {
-  stars = new ArrayList<Star> ();
-  planets = new ArrayList<Planet> ();
-  stars.add(new Star(1.989 * pow(10, 26), 69.6340, new PVector(width / 2, height / 2), new PVector(0, 0), new PVector(0, 0), color(255, 255, 0), 5600));
-  planets.add(new Planet());
+  celestialObjects = new ArrayList<CelestialObject> ();
+
+  celestialObjects.add(new Star(1.989 * pow(10, 26), 69.6340, new PVector(width / 2, height / 2), new PVector(0, 0), new PVector(0, 0), color(255, 255, 0), 5600));
+
 }
 
 void setup() {
