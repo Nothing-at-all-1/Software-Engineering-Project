@@ -1,22 +1,76 @@
 import g4p_controls.*;
 
-float scalingFactor = pow(10, -9);  //1 pixel is 10000km
+float scalingFactor = pow(10, -9);  
 float timeStep = 60;
 
 ArrayList<CelestialObject> celestialObjects;
 
-void reset() {
-  celestialObjects = new ArrayList<CelestialObject> ();
+//float[] data(){
+//  String[] data = loadStrings("data.txt");
+//  for (String s : data){
+//    s.split("\t");
+//  }
+//}
 
-  celestialObjects.add(new Star(1.989 * pow(10, 30), 69.634 , new PVector(width / 2, height / 2), new PVector(0, 0), new PVector(0, 0), color(255, 255, 0), 5600));
-  celestialObjects.add(new Planet(5.972 * pow (10, 24), 0.6378, new PVector(100, 100), new PVector(0.5, 0), new PVector(0, 0), color(255)));
+//yall can do this if you want
+
+PVector center = new PVector (width/2, height/2);
+
+float[][] data = {
+  {0.33,  0.2439,  57.91},
+  {4.87,  0.6052,  108.21},
+  {5.97,  0.6371,  149.60},
+  {0.642,  0.3389,  227.92},
+  {1898,  6.9911,  778.57},
+  {568,  5.8232,  1433.53},
+  {86.8,  2.5362,  2872.46},
+  {102,  2.4622,  4495.06}
+};
+
+color[] colorData = {
+  color(169, 169, 169),
+  color(184, 158, 121),
+  color(100, 100, 255),
+  color(204, 102, 0),
+  color(105, 105, 105),
+  color(255, 165, 0),
+  color(135, 206, 235),
+  color(255, 255, 255)
+};
+
+String[] nameData = {"Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune"};
+
+PVector[] startingVelocities = {  //change these so it works
+  new PVector(1, -0.9),
+  new PVector(0.5, -0.5),
+  new PVector(0.5, -0.5),
+  new PVector(0.5, -0.5),
+  new PVector(0.5, -0.5),
+  new PVector(0.5, -0.5),
+  new PVector(0.5, -0.5),
+  new PVector(0.5, -0.5)
+};
+
+//
+// i will move this data to a txt file or a json file eventually, i cba rn
+//
+
+void reset() {
+  
+  celestialObjects = new ArrayList<CelestialObject> () {{
+
+    add(new Star("Sun", 1.989 * pow(10, 30), 69.634, new PVector(width / 2, height / 2), new PVector(0, 0), new PVector(0, 0), color(255, 255, 0), 5600));
+    
+    for (int i = 0; i < 8; i++) add(new Planet(nameData[i], data[i][0] * pow(10, 24), data[i][1], PVector.add(center, new PVector(data[i][2], data[i][2])), startingVelocities[i], new PVector(0, 0), colorData[i]));
  
+  }};
+
 }
 
 void setup() {
+
   size(600, 600);
   //noLoop();
-  //frameRate(1);
   reset();
 }
 
