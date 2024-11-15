@@ -23,7 +23,7 @@ class CelestialObject {
       if (other != this){
         float g = 6.6743 * pow(10, -11);
         
-        float dist = dist(other.pos.x+other.r, other.pos.y+other.r, pos.x+r, pos.y+r) * 10000;  //this is technically what we should be using,
+        float dist = dist(other.pos.x+other.r, other.pos.y+other.r, pos.x+r, pos.y+r) / 10000;  //this is technically what we should be using,
         //but at our current scaling factor this would be like 14.7 thousand pixels offscreen so it doesn't work
         
         //float dist = 14798; 
@@ -32,7 +32,7 @@ class CelestialObject {
         
         double f = (-g * this.mass * other.mass) / pow(dist, 2);
         
-        float F = (float) f;
+        float F = max((float)f, 0.000001);
         
         
       //  float distance = dist(pos.x, pos.y, other.pos.x, other.pos.y) - this.r - other.r;
@@ -52,7 +52,9 @@ class CelestialObject {
         
         vel.add(new PVector(sin(angle)*F, cos(angle)*F));
         
+        println(dist);
         println(F);
+        println(pos);
       }
     }
     
