@@ -3,11 +3,9 @@ class CelestialObject {
   float mass, r, visualScaling;;  
   PVector pos, vel, acc;
   color col;
-  String name; //just to distinguish them easier
   
   //Intializes the variables when it is created
-  CelestialObject(String n, float m, float r, PVector p, PVector v, PVector a, color c) {
-    this.name = n;
+  CelestialObject(float m, float r, PVector p, PVector v, PVector a, color c) {
     this.mass = m;
     this.r = r;
     this.pos = p;
