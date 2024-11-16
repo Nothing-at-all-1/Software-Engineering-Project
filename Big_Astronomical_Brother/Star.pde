@@ -17,7 +17,7 @@ class Star extends CelestialObject{
     
     this.col = emission;
     
-    this.visualScaling = 1;
+    this.visualScaling = 0.5;
   }
   
   void update(){

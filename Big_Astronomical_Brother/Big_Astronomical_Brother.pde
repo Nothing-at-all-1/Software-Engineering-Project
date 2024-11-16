@@ -14,8 +14,6 @@ ArrayList<CelestialObject> celestialObjects;
 
 //yall can do this if you want
 
-PVector center = new PVector (width/2, height/2);
-
 float[][] data = {
   {0.33,  0.2439,  57.91},
   {4.87,  0.6052,  108.21},
@@ -40,11 +38,11 @@ color[] colorData = {
 
 String[] nameData = {"Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune"};
 
-PVector[] startingVelocities = {  //change these so it works
+PVector[] startingVelocities = {  //change these so it works or is accurate
   new PVector(1, -0.9),
+  new PVector(0.75, -0.5),
   new PVector(0.5, -0.5),
-  new PVector(0.5, -0.5),
-  new PVector(0.5, -0.5),
+  new PVector(0.35, -0.5),
   new PVector(0.5, -0.5),
   new PVector(0.5, -0.5),
   new PVector(0.5, -0.5),
@@ -57,13 +55,15 @@ PVector[] startingVelocities = {  //change these so it works
 
 void reset() {
   
+  PVector center = new PVector (width/2, height/2);
+  
   celestialObjects = new ArrayList<CelestialObject> () {{
 
-    add(new Star("Sun", 1.989 * pow(10, 30), 69.634, new PVector(width / 2, height / 2), new PVector(0, 0), new PVector(0, 0), color(255, 255, 0), 5600));
+  add(new Star("Sun", 1.989 * pow(10, 30), 69.634, center, new PVector(0, 0), new PVector(0, 0), color(255, 255, 0), 5600));
     
-    for (int i = 0; i < 8; i++) add(new Planet(nameData[i], data[i][0] * pow(10, 24), data[i][1], PVector.add(center, new PVector(data[i][2], data[i][2])), startingVelocities[i], new PVector(0, 0), colorData[i]));
- 
-  }};
+  for (int i = 0; i < 8; i++) add(new Planet(nameData[i], data[i][0] * pow(10, 24), data[i][1], new PVector(center.x + sqrt(pow(data[i][2], 2)/2), center.y + sqrt(pow(data[i][2],2))), startingVelocities[i], new PVector(0, 0), colorData[i]));
+  
+}};
 
 }
 
