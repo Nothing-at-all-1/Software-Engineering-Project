@@ -15,6 +15,7 @@ PVector[] startingVelocities = {  //change these so it works or is accurate
   new PVector(0.5, -0.5),
   new PVector(0.5, -0.5),
   new PVector(0.5, -0.5),
+  new PVector(0.5, -0.5),
   new PVector(0.5, -0.5)
 };
 
@@ -41,6 +42,11 @@ void reset() {
       add(new Planet(mass * pow(10, 24), radius, distance, startingVelocities[i], new PVector(0, 0), planetColor));
     
     }
+    PVector asteroidPosition = new PVector(500, 300);  
+    PVector asteroidVelocity = startingVelocities[8];  
+    color asteroidColor = color(150, 150, 150);  
+    
+    add(new Asteroid(1.0 * pow(10, 12), 5, asteroidPosition, asteroidVelocity, new PVector(0, 0), asteroidColor));
     
   }};
 
@@ -68,6 +74,17 @@ void draw() {
 }
 
 void mousePressed(){
+
+  float XdistanceFromSun = random(100, 400);  
+  float YdistancefromSun = random(100,200);
   
+  PVector asteroidPos = new PVector(XdistanceFromSun, YdistancefromSun);  
+  float orbitalVel = random(0.5, 0.7); 
+  PVector asteroidVel= new PVector(0, orbitalVel); 
+  color asteroidColor = color(150, 150, 150);  
+  
+  Asteroid newAsteroid = new Asteroid(1.0 * pow(10, 12), 5, asteroidPos, asteroidVel, new PVector(0, 0), asteroidColor);
+  
+  celestialObjects.add(newAsteroid);
 
 }
