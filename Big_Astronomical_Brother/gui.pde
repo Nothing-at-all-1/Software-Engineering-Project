@@ -19,7 +19,7 @@ synchronized public void win_draw1(PApplet appc, GWinData data) { //_CODE_:windo
 } //_CODE_:window1:393323:
 
 public void spawnedObjectChanged(GDropList source, GEvent event) { //_CODE_:spawnedObject:681934:
-  println("dropList1 - GDropList >> GEvent." + event + " @ " + millis());
+
 } //_CODE_:spawnedObject:681934:
 
 public void timeStepChanged(GKnob source, GEvent event) { //_CODE_:timeStepControl:952075:
@@ -50,7 +50,7 @@ public void createGUI(){
   timeStepControl.setOverArcOnly(false);
   timeStepControl.setIncludeOverBezel(false);
   timeStepControl.setShowTrack(true);
-  timeStepControl.setLimits(60.0, 60.0, 600.0);
+  timeStepControl.setLimits(60.0, 1.0, 600.0);
   timeStepControl.setNbrTicks(20);
   timeStepControl.setShowTicks(true);
   timeStepControl.setOpaque(false);

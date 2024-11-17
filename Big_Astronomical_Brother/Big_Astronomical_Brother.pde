@@ -74,15 +74,24 @@ void draw() {
 }
 
 void mousePressed(){
+  
+  PVector spawnPos = new PVector(mouseX, mouseY); 
 
-  
-  PVector asteroidPos = new PVector(mouseX, mouseY);  
-  float orbitalVel = random(-1, 1); 
-  PVector asteroidVel = new PVector(0, orbitalVel); 
-  color asteroidColor = color(150, 150, 150);  
-  
-  Asteroid newAsteroid = new Asteroid(1.0 * pow(10, 12), 1, asteroidPos, asteroidVel, new PVector(0, 0), asteroidColor);
-  
-  celestialObjects.add(newAsteroid);
+  switch (spawnedObject.getSelectedText()){
+    case "Asteroid":
+
+      float orbitalVel = random(-1, 1); 
+      PVector asteroidVel = new PVector(0, orbitalVel); 
+      color asteroidColor = color(150, 150, 150);  
+      
+      Asteroid newAsteroid = new Asteroid(1.0 * pow(10, 12), 1, spawnPos, asteroidVel, new PVector(0, 0), asteroidColor);
+      
+      celestialObjects.add(newAsteroid);
+      break;
+     case "Planet":
+       break;
+     case "Star":
+       break;
+  }
 
 }
