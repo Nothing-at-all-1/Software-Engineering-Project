@@ -19,13 +19,35 @@ synchronized public void win_draw1(PApplet appc, GWinData data) { //_CODE_:windo
 } //_CODE_:window1:393323:
 
 public void spawnedObjectChanged(GDropList source, GEvent event) { //_CODE_:spawnedObject:681934:
-
+  switch (spawnedObject.getSelectedText()){
+    case "Asteroid":
+      radius.setLimits(radius.getValueF(), 1, 10);
+      break;
+    case "Planet":
+      radius.setLimits(radius.getValueF(), 10, 100);
+      break;
+    case "Star":
+      radius.setLimits(radius.getValueF(), 10, 100);
+      break;
+  }
 } //_CODE_:spawnedObject:681934:
 
 public void timeStepChanged(GKnob source, GEvent event) { //_CODE_:timeStepControl:952075:
   timeStep = timeStepControl.getValueI();
-  ratio.setText("1 year every " + round(15*60/timeStep * pow(10, 3)) / pow(10, 3) + " seconds");
+  timeRatio.setText("1 year every " + round(15*60/timeStep * pow(10, 3)) / pow(10, 3) + " seconds");
 } //_CODE_:timeStepControl:952075:
+
+public void radiusChanged(GSlider source, GEvent event) { //_CODE_:radius:996978:
+
+} //_CODE_:radius:996978:
+
+public void velocityChanged(GSlider2D source, GEvent event) { //_CODE_:velocity:936818:
+
+} //_CODE_:velocity:936818:
+
+public void spawnMassChanged(GSlider source, GEvent event) { //_CODE_:spawnMass:785904:
+
+} //_CODE_:spawnMass:785904:
 
 
 
@@ -63,10 +85,46 @@ public void createGUI(){
   timeLabel.setTextAlign(GAlign.CENTER, GAlign.BOTTOM);
   timeLabel.setText("Time Modifier");
   timeLabel.setOpaque(false);
-  ratio = new GLabel(window1, 90, 100, 120, 40);
-  ratio.setTextAlign(GAlign.CENTER, GAlign.TOP);
-  ratio.setText("My label");
-  ratio.setOpaque(false);
+  timeRatio = new GLabel(window1, 90, 100, 120, 40);
+  timeRatio.setTextAlign(GAlign.CENTER, GAlign.TOP);
+  timeRatio.setText("My label");
+  timeRatio.setOpaque(false);
+  radius = new GSlider(window1, 250, 40, 60, 60, 10.0);
+  radius.setShowValue(true);
+  radius.setShowLimits(true);
+  radius.setTextOrientation(G4P.ORIENT_LEFT);
+  radius.setRotation(PI/2, GControlMode.CORNER);
+  radius.setLimits(2, 1, 10);
+  radius.setNumberFormat(G4P.INTEGER, 0);
+  radius.setOpaque(false);
+  radius.addEventHandler(this, "radiusChanged");
+  radiusLabel = new GLabel(window1, 190, 20, 60, 20);
+  radiusLabel.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
+  radiusLabel.setText("Radius");
+  radiusLabel.setOpaque(false);
+  velocity = new GSlider2D(window1, 260, 40, 60, 60);
+  velocity.setLimitsX(0.0, -1.0, 1.0);
+  velocity.setLimitsY(0.0, -1.0, 1.0);
+  velocity.setNumberFormat(G4P.DECIMAL, 2);
+  velocity.setOpaque(true);
+  velocity.addEventHandler(this, "velocityChanged");
+  velocityLabel = new GLabel(window1, 260, 20, 60, 20);
+  velocityLabel.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
+  velocityLabel.setText("Velocity");
+  velocityLabel.setOpaque(false);
+  spawnMass = new GSlider(window1, 390, 40, 60, 60, 10.0);
+  spawnMass.setShowValue(true);
+  spawnMass.setShowLimits(true);
+  spawnMass.setTextOrientation(G4P.ORIENT_LEFT);
+  spawnMass.setRotation(PI/2, GControlMode.CORNER);
+  spawnMass.setLimits(1, 1, 10);
+  spawnMass.setNumberFormat(G4P.INTEGER, 0);
+  spawnMass.setOpaque(false);
+  spawnMass.addEventHandler(this, "spawnMassChanged");
+  massLabel = new GLabel(window1, 330, 20, 60, 20);
+  massLabel.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
+  massLabel.setText("Mass");
+  massLabel.setOpaque(false);
   window1.loop();
 }
 
@@ -77,4 +135,10 @@ GDropList spawnedObject;
 GKnob timeStepControl; 
 GLabel objectLabel; 
 GLabel timeLabel; 
-GLabel ratio; 
+GLabel timeRatio; 
+GSlider radius; 
+GLabel radiusLabel; 
+GSlider2D velocity; 
+GLabel velocityLabel; 
+GSlider spawnMass; 
+GLabel massLabel; 

@@ -42,11 +42,6 @@ void reset() {
       add(new Planet(mass * pow(10, 24), radius, distance, startingVelocities[i], new PVector(0, 0), planetColor));
     
     }
-    PVector asteroidPosition = new PVector(500, 300);  
-    PVector asteroidVelocity = startingVelocities[8];  
-    color asteroidColor = color(150, 150, 150);  
-    
-    add(new Asteroid(1.0 * pow(10, 12), 5, asteroidPosition, asteroidVelocity, new PVector(0, 0), asteroidColor));
     
   }};
 
@@ -59,7 +54,7 @@ void setup() {
   size(600, 600);
   //noLoop();
   createGUI();
-  ratio.setText("1 year every " + round(15*60/timeStep * pow(10, 3))/pow(10, 3) + " seconds");
+  timeRatio.setText("1 year every " + round(15*60/timeStep * pow(10, 3))/pow(10, 3) + " seconds");
   reset();
 }
 
@@ -76,21 +71,24 @@ void draw() {
 void mousePressed(){
   
   PVector spawnPos = new PVector(mouseX, mouseY); 
+  float spawnRadius = radius.getValueF();
+  PVector vel = new PVector( velocity.getValueXF(), velocity.getValueYF());
+  float mass = spawnMass.getValueF();
 
   switch (spawnedObject.getSelectedText()){
     case "Asteroid":
-
-      float orbitalVel = random(-1, 1); 
-      PVector asteroidVel = new PVector(0, orbitalVel); 
       color asteroidColor = color(150, 150, 150);  
       
-      Asteroid newAsteroid = new Asteroid(1.0 * pow(10, 12), 1, spawnPos, asteroidVel, new PVector(0, 0), asteroidColor);
+      Asteroid newAsteroid = new Asteroid(mass * pow(10, 12), spawnRadius, spawnPos, vel, new PVector(0, 0), asteroidColor);
       
       celestialObjects.add(newAsteroid);
       break;
      case "Planet":
+       
        break;
      case "Star":
+       celestialObjects.add(new Star(mass * pow(10, 30), spawnRadius, spawnPos, vel, new PVector(0, 0), color(255, 255, 0), 5600));
+
        break;
   }
 

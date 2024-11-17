@@ -20,11 +20,11 @@ class Star extends CelestialObject{
     this.visualScaling = 0.5;
   }
   
-  void update(){
-    float sb = 5.6704 * pow(10, -8);
+  //void update(){
+  //  float sb = 5.6704 * pow(10, -8);
     
     
   
-  }
+  //}
 
 }
