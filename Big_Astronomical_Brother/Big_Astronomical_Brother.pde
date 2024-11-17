@@ -75,15 +75,13 @@ void draw() {
 
 void mousePressed(){
 
-  float XdistanceFromSun = random(100, 400);  
-  float YdistancefromSun = random(100,200);
   
-  PVector asteroidPos = new PVector(XdistanceFromSun, YdistancefromSun);  
-  float orbitalVel = random(0.5, 0.7); 
-  PVector asteroidVel= new PVector(0, orbitalVel); 
+  PVector asteroidPos = new PVector(mouseX, mouseY);  
+  float orbitalVel = random(-1, 1); 
+  PVector asteroidVel = new PVector(0, orbitalVel); 
   color asteroidColor = color(150, 150, 150);  
   
-  Asteroid newAsteroid = new Asteroid(1.0 * pow(10, 12), 5, asteroidPos, asteroidVel, new PVector(0, 0), asteroidColor);
+  Asteroid newAsteroid = new Asteroid(1.0 * pow(10, 12), 1, asteroidPos, asteroidVel, new PVector(0, 0), asteroidColor);
   
   celestialObjects.add(newAsteroid);
 

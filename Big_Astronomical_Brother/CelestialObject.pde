@@ -1,6 +1,6 @@
 class CelestialObject {
   //fields that Asteroid, Star and Planet class also hold
-  float mass, r, visualScaling;;  
+  float mass, r, visualScaling;  
   PVector pos, vel, acc;
   color col;
   
@@ -27,12 +27,21 @@ class CelestialObject {
       if (other != this){
         float g = 6.6743 * pow(10, -11);
         
-        float distSq = pow(PVector.sub(this.pos, other.pos).mag() / scalingFactor, 2); 
+        float dist = PVector.sub(this.pos, other.pos).mag();
+        
+        float distSq = pow(dist / scalingFactor, 2); 
         
         float a = g * other.mass / distSq;
         
-        PVector direction = PVector.sub(other.pos, pos);  
-        direction.normalize();
+        PVector direction = PVector.sub(other.pos, pos).normalize();
+        
+        if (dist < other.r*other.visualScaling + this.r*this.visualScaling){
+          
+          PVector kS = PVector.mult(direction, vel.dot(direction) - other.vel.dot(direction)).mult(pow(10, -6));
+          this.vel.add(kS);
+          other.vel.sub(kS);
+          //this.pos = PVector.add(other.pos, direction.mult(other.r*other.visualScaling)); // doesn't work since everything has different sizes
+        }
         
         vel.add(direction.mult(a));
         
