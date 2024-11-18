@@ -3,15 +3,16 @@ class CelestialObject {
   float mass, r, visualScaling;  
   PVector pos, vel, acc;
   color col;
-  
+  String type;
   //Intializes the variables when it is created
-  CelestialObject(float m, float r, PVector p, PVector v, PVector a, color c) {
+  CelestialObject(float m, float r, PVector p, PVector v, PVector a, color c, String t) {
     this.mass = m;
     this.r = r;
     this.pos = p;
     this.vel = v;
     this.acc = a;
     this.col = c;
+    this.type = t;
   }
   
   float mapped(float p){
@@ -37,10 +38,37 @@ class CelestialObject {
         
         if (dist < other.r*other.visualScaling + this.r*this.visualScaling){
           
-          PVector kS = PVector.mult(direction, vel.dot(direction) - other.vel.dot(direction)).mult(pow(10, -6));
-          this.vel.add(kS);
-          other.vel.sub(kS);
-          //this.pos = PVector.add(other.pos, direction.mult(other.r*other.visualScaling)); // doesn't work since everything has different sizes
+          switch (type){
+            
+            case "solid":
+            
+              if (other.type == "solid"){
+            
+                //PVector kS = PVector.mult(direction, vel.dot(direction) - other.vel.dot(direction)).mult(pow(10, -6));
+                //this.vel.add(kS);
+                //other.vel.sub(kS);
+                
+                //float overlap = this.r*this.visualScaling + other.r*other.visualScaling - PVector.dist(this.pos, other.pos);
+                
+                //PVector correction = PVector.mult(direction, overlap/2f);
+                
+                //this.pos.add(correction); 
+                //other.pos.sub(correction);
+                
+              }
+              
+              break;
+              
+            case "gas":
+
+              if (mass > other.mass){
+                mass += other.mass;
+                other.mass = 0;
+                other.r = 0;
+              }
+              break;
+          };
+          
         }
         
         vel.add(direction.mult(a));

@@ -25,7 +25,7 @@ void reset() {
   
   celestialObjects = new ArrayList<CelestialObject> () {{
 
-    add(new Star(1.989 * pow(10, 30), 69.634, center, new PVector(0, 0), new PVector(0, 0), color(255, 255, 0), 5600));
+    add(new Star(1.989 * pow(10, 30), 69.634, center, new PVector(0, 0), new PVector(0, 0), color(255, 255, 0), "gas", 5600));
       
     for (int i = 0; i < 8; i++) {
       
@@ -38,8 +38,9 @@ void reset() {
       JSONArray colorArray = selectedPlanet.getJSONArray("color"); 
       color planetColor = color(colorArray.getInt(0), colorArray.getInt(1), colorArray.getInt(2));
       
+      String type = selectedPlanet.getString("type");
       
-      add(new Planet(mass * pow(10, 24), radius, distance, startingVelocities[i], new PVector(0, 0), planetColor));
+      add(new Planet(mass * pow(10, 24), radius, distance, startingVelocities[i], new PVector(0, 0), planetColor, type));
     
     }
     
@@ -79,15 +80,15 @@ void mousePressed(){
     case "Asteroid":
       color asteroidColor = color(150, 150, 150);  
       
-      Asteroid newAsteroid = new Asteroid(mass * pow(10, 12), spawnRadius, spawnPos, vel, new PVector(0, 0), asteroidColor);
+      Asteroid newAsteroid = new Asteroid(mass * pow(10, 12), spawnRadius, spawnPos, vel, new PVector(0, 0), asteroidColor, "solid");
       
       celestialObjects.add(newAsteroid);
       break;
      case "Planet":
-       
+       celestialObjects.add(new Planet(mass * pow(10, 24), spawnRadius, spawnPos, vel, new PVector(0, 0), color(100, 100, 200), "solid"));
        break;
      case "Star":
-       celestialObjects.add(new Star(mass * pow(10, 30), spawnRadius, spawnPos, vel, new PVector(0, 0), color(255, 255, 0), 5600));
+       celestialObjects.add(new Star(mass * pow(10, 30), spawnRadius, spawnPos, vel, new PVector(0, 0), color(255, 255, 0), "gas", 5600));
 
        break;
   }

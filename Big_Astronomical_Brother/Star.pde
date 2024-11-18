@@ -3,8 +3,8 @@ class Star extends CelestialObject{
   //add temp as a field for this subclass only
   float temp;
 
-  Star(float m, float r, PVector p, PVector v, PVector a, color c, float t){
-    super(m, r, p, v, a, c);
+  Star(float m, float r, PVector p, PVector v, PVector a, color c, String type, float t){
+    super(m, r, p, v, a, c, type);
     this.temp = t;
   
     float colorMod = norm(constrain(temp, 2000, 30000), 2000, 30000);

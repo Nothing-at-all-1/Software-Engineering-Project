@@ -24,7 +24,7 @@ public void spawnedObjectChanged(GDropList source, GEvent event) { //_CODE_:spaw
       radius.setLimits(radius.getValueF(), 1, 10);
       break;
     case "Planet":
-      radius.setLimits(radius.getValueF(), 10, 100);
+      radius.setLimits(radius.getValueF(), 0.5, 1);
       break;
     case "Star":
       radius.setLimits(radius.getValueF(), 10, 100);
