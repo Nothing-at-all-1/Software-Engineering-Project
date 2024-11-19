@@ -72,23 +72,33 @@ void draw() {
 
 void mousePressed(){
   
-  PVector spawnPos = new PVector(mouseX, mouseY); 
+  boolean mouseOverObject = false;
+  PVector mousePos = new PVector(mouseX, mouseY); 
   float spawnRadius = radius.getValueF();
-  PVector vel = new PVector( velocity.getValueXF(), velocity.getValueYF());
+  PVector vel = new PVector(velocity.getValueXF(), velocity.getValueYF());
   float mass = spawnMass.getValueF();
-
-  switch (spawnedObject.getSelectedText()){
-    case "Asteroid":
-      color asteroidColor = color(150, 150, 150);  
-      celestialObjects.add(new Asteroid(mass * pow(10, 12), spawnRadius, spawnPos, vel, new PVector(0, 0), asteroidColor, "solid"));
-      break;
-     case "Planet":
-       celestialObjects.add(new Planet(mass * pow(10, 24), spawnRadius, spawnPos, vel, new PVector(0, 0), color(100, 100, 200), "solid"));
-       break;
-     case "Star":
-       celestialObjects.add(new Star(mass * pow(10, 30), spawnRadius, spawnPos, vel, new PVector(0, 0), color(255, 255, 0), "gas", 5600));
-
-       break;
+  for (CelestialObject co : celestialObjects) {
+    if (PVector.sub(mousePos, co.pos).mag() < co.radius) {
+      mouseOverObject = true;
+    }
+    else {
+      mouseOverObject = false;
+    }
+  }
+  
+  if (!mouseOverObject) {
+    switch (spawnedObject.getSelectedText()) {
+      case "Asteroid":
+        color asteroidColor = color(150, 150, 150);  
+        celestialObjects.add(new Asteroid(mass * pow(10, 12), spawnRadius, mousePos, vel, new PVector(0, 0), asteroidColor, "solid"));
+        break;
+       case "Planet":
+         celestialObjects.add(new Planet(mass * pow(10, 24), spawnRadius, mousePos, vel, new PVector(0, 0), color(100, 100, 200), "solid"));
+         break;
+       case "Star":
+         celestialObjects.add(new Star(mass * pow(10, 30), spawnRadius, mousePos, vel, new PVector(0, 0), color(255, 255, 0), "gas", 5600));
+         break;
+    }
   }
 
 }
