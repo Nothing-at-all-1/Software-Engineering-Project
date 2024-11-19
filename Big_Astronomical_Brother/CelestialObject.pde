@@ -24,37 +24,43 @@ class CelestialObject {
       if (other != this){
         float g = 6.6743 * pow(10, -11);
         
-        float dist = PVector.sub(this.pos, other.pos).mag();
+        PVector difference = PVector.sub(this.pos, other.pos);
         
-        float a = g * other.mass / pow(dist / scalingFactor, 2);
+        float dist = difference.mag();
         
-        PVector direction = PVector.sub(other.pos, pos).normalize();
+        float a = -g * other.mass / pow(dist / scalingFactor, 2);
+        
+        PVector direction = difference.normalize();
 
         
         if (dist < other.radius * other.visualScaling + this.radius * this.visualScaling){
           
           switch (type){
             case "solid":
-              if (other.type == "solid"){
-              checkCollision(other);
-            }
-
-              
-                
             
-                //PVector kS = PVector.mult(direction, vel.dot(direction) - other.vel.dot(direction)).mult(pow(10, -6));
-                //this.vel.add(kS);
-                //other.vel.sub(kS);
-                
-                //float overlap = this.r*this.visualScaling + other.r*other.visualScaling - PVector.dist(this.pos, other.pos);
-                
-                //PVector correction = PVector.mult(direction, overlap/2f);
-                
-                //this.pos.add(correction); 
-                //other.pos.sub(correction);
-                
+              if (other.type == "solid"){
               
-              
+                float overlap = other.radius * other.visualScaling + this.radius * this.visualScaling - dist; //check
+   
+                PVector adj = PVector.mult(direction, overlap / 2f);
+                
+                this.pos.add(adj);
+                other.pos.sub(adj);
+                
+                float normal = difference.dot(direction);
+                
+                if (normal < 0) {
+                  //hit and stick collision formula
+                  float impulse = (2 * normal) / (this.mass + other.mass);
+            
+                  this.vel.sub(PVector.mult(direction, impulse * other.mass));
+                  other.vel.add(PVector.mult(direction, impulse * this.mass));
+                
+                }
+                
+              }
+            
+                        
               break;
               
             case "gas":
@@ -62,8 +68,10 @@ class CelestialObject {
               if (mass > other.mass){
                 mass += other.mass;
                 other.mass = 0;
-                other.radius = 0;
+                other.radius = floor(other.radius/1.1);
+                deleteCache.add(other);
               }
+              
               break;
           }
           
@@ -75,27 +83,6 @@ class CelestialObject {
 
       }
     }
-  }
-  void checkCollision(CelestialObject other) {
-  float overlap = (other.radius * other.visualScaling + this.radius * this.visualScaling) - PVector.dist(this.pos, other.pos); //check
-
-  if (overlap > 0) { // check if distance is greater
-    PVector adj = PVector.mult(PVector.sub(this.pos, other.pos).normalize(), overlap / 2.0);
-    this.pos.add(adj);
-    other.pos.sub(adj);
-
-    PVector relativeVel = PVector.sub(this.vel, other.vel);
-    float normalVel = relativeVel.dot(PVector.sub(this.pos, other.pos).normalize());
-
-    
-    if (normalVel < 0) {
-      //hit and stick collision formula
-      float impulse = (2 * normalVel) / (this.mass + other.mass);
-
-      this.vel.sub(PVector.mult(PVector.sub(this.pos, other.pos).normalize(), impulse * other.mass));
-      other.vel.add(PVector.mult(PVector.sub(this.pos, other.pos).normalize(), impulse * this.mass));
-    }
-  }
   }
   
   void display() {

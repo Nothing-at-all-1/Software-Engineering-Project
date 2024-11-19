@@ -2,8 +2,10 @@ import g4p_controls.*;
 
 float scalingFactor = pow(10, -9);  
 float timeStep = 60;
+//float collisionDampening = 10;
 
 ArrayList<CelestialObject> celestialObjects;
+ArrayList<CelestialObject> deleteCache;
 
 JSONArray data;
 
@@ -24,6 +26,7 @@ void reset() {
   data = loadJSONArray("data.json");
   PVector center = new PVector (width/2, height/2);
   
+  deleteCache = new ArrayList<CelestialObject>();
   celestialObjects = new ArrayList<CelestialObject> () {{
 
     add(new Star(1.989 * pow(10, 30), 69.634, center, new PVector(0, 0), new PVector(0, 0), color(255, 255, 0), "gas", 5600));
@@ -68,6 +71,13 @@ void draw() {
     co.display();
     co.update();
   }
+  
+  for (CelestialObject del : deleteCache){
+    if (celestialObjects.contains(del) && del.radius <= 1){
+      celestialObjects.remove(del);
+    }
+  }
+  
 }
 
 void mousePressed(){
@@ -78,12 +88,7 @@ void mousePressed(){
   PVector vel = new PVector(velocity.getValueXF(), velocity.getValueYF());
   float mass = spawnMass.getValueF();
   for (CelestialObject co : celestialObjects) {
-    if (PVector.sub(mousePos, co.pos).mag() < co.radius) {
-      mouseOverObject = true;
-    }
-    else {
-      mouseOverObject = false;
-    }
+    mouseOverObject = (PVector.dist(mousePos, co.pos) < co.radius*co.visualScaling)?true:false;
   }
   
   if (!mouseOverObject) {
