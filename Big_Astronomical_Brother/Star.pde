@@ -6,7 +6,6 @@ class Star extends CelestialObject{
   Star(float m, float r, PVector p, PVector v, PVector a, color c, String type, float t){
     super(m, r, p, v, a, c, type);
     this.temp = t;
-  
     float colorMod = norm(constrain(temp, 2000, 30000), 2000, 30000);
     
     color blue = color(175, 201, 255);

@@ -21,6 +21,7 @@ PVector[] startingVelocities = {  //change these so it works or is accurate
 
 void reset() {
   
+  data = loadJSONArray("data.json");
   PVector center = new PVector (width/2, height/2);
   
   celestialObjects = new ArrayList<CelestialObject> () {{
@@ -50,7 +51,7 @@ void reset() {
 
 void setup() {
   
-  data = loadJSONArray("data.json");
+  
   
   size(600, 600);
   //noLoop();
@@ -79,10 +80,7 @@ void mousePressed(){
   switch (spawnedObject.getSelectedText()){
     case "Asteroid":
       color asteroidColor = color(150, 150, 150);  
-      
-      Asteroid newAsteroid = new Asteroid(mass * pow(10, 12), spawnRadius, spawnPos, vel, new PVector(0, 0), asteroidColor, "solid");
-      
-      celestialObjects.add(newAsteroid);
+      celestialObjects.add(new Asteroid(mass * pow(10, 12), spawnRadius, spawnPos, vel, new PVector(0, 0), asteroidColor, "solid"));
       break;
      case "Planet":
        celestialObjects.add(new Planet(mass * pow(10, 24), spawnRadius, spawnPos, vel, new PVector(0, 0), color(100, 100, 200), "solid"));
