@@ -36,7 +36,7 @@ class CelestialObject {
           switch (type){
             case "solid":
               if (other.type == "solid"){
-              collisiondetect(other);
+              checkCollision(other);
             }
 
               
@@ -76,8 +76,8 @@ class CelestialObject {
       }
     }
   }
-  void collisiondetect(CelestialObject other) {
-  float overlap = (other.r * other.visualScaling + this.r * this.visualScaling) - PVector.dist(this.pos, other.pos); //check
+  void checkCollision(CelestialObject other) {
+  float overlap = (other.radius * other.visualScaling + this.radius * this.visualScaling) - PVector.dist(this.pos, other.pos); //check
 
   if (overlap > 0) { // check if distance is greater
     PVector adj = PVector.mult(PVector.sub(this.pos, other.pos).normalize(), overlap / 2.0);
