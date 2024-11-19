@@ -35,6 +35,7 @@ class CelestialObject {
         float a = g * other.mass / distSq;
         
         PVector direction = PVector.sub(other.pos, pos).normalize();
+
         
         if (dist < other.r*other.visualScaling + this.r*this.visualScaling){
           
@@ -43,6 +44,11 @@ class CelestialObject {
             case "solid":
             
               if (other.type == "solid"){
+              collisiondetect(other);
+            }
+
+              
+                
             
                 //PVector kS = PVector.mult(direction, vel.dot(direction) - other.vel.dot(direction)).mult(pow(10, -6));
                 //this.vel.add(kS);
@@ -55,7 +61,7 @@ class CelestialObject {
                 //this.pos.add(correction); 
                 //other.pos.sub(correction);
                 
-              }
+              
               
               break;
               
@@ -67,7 +73,7 @@ class CelestialObject {
                 other.r = 0;
               }
               break;
-          };
+          }
           
         }
         
@@ -77,7 +83,27 @@ class CelestialObject {
 
       }
     }
+  }
+  void collisiondetect(CelestialObject other) {
+  float overlap = (other.r * other.visualScaling + this.r * this.visualScaling) - PVector.dist(this.pos, other.pos); //check
+
+  if (overlap > 0) { // check if distance is greater
+    PVector adj = PVector.mult(PVector.sub(this.pos, other.pos).normalize(), overlap / 2.0);
+    this.pos.add(adj);
+    other.pos.sub(adj);
+
+    PVector relativeVel = PVector.sub(this.vel, other.vel);
+    float normalVel = relativeVel.dot(PVector.sub(this.pos, other.pos).normalize());
+
     
+    if (normalVel < 0) {
+      //hit and stick collision formula
+      float impulse = (2 * normalVel) / (this.mass + other.mass);
+
+      this.vel.sub(PVector.mult(PVector.sub(this.pos, other.pos).normalize(), impulse * other.mass));
+      other.vel.add(PVector.mult(PVector.sub(this.pos, other.pos).normalize(), impulse * this.mass));
+    }
+  }
   }
   
   void display() {
