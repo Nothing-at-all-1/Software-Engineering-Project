@@ -1,22 +1,18 @@
 class CelestialObject {
   //fields that Asteroid, Star and Planet class also hold
-  float mass, r, visualScaling;  
+  float mass, radius, visualScaling;  
   PVector pos, vel, acc;
   color col;
   String type;
   //Intializes the variables when it is created
   CelestialObject(float m, float r, PVector p, PVector v, PVector a, color c, String t) {
     this.mass = m;
-    this.r = r;
+    this.radius = r;
     this.pos = p;
     this.vel = v;
     this.acc = a;
     this.col = c;
     this.type = t;
-  }
-  
-  float mapped(float p){
-    return map(p, 0, width, 0, pow(scalingFactor, -1));
   }
   
   void update() {
@@ -30,18 +26,14 @@ class CelestialObject {
         
         float dist = PVector.sub(this.pos, other.pos).mag();
         
-        float distSq = pow(dist / scalingFactor, 2); 
-        
-        float a = g * other.mass / distSq;
+        float a = g * other.mass / pow(dist / scalingFactor, 2);
         
         PVector direction = PVector.sub(other.pos, pos).normalize();
         
-        if (dist < other.r*other.visualScaling + this.r*this.visualScaling){
+        if (dist < other.radius * other.visualScaling + this.radius * this.visualScaling){
           
           switch (type){
-            
             case "solid":
-            
               if (other.type == "solid"){
             
                 //PVector kS = PVector.mult(direction, vel.dot(direction) - other.vel.dot(direction)).mult(pow(10, -6));
@@ -64,7 +56,7 @@ class CelestialObject {
               if (mass > other.mass){
                 mass += other.mass;
                 other.mass = 0;
-                other.r = 0;
+                other.radius = 0;
               }
               break;
           };
@@ -83,7 +75,7 @@ class CelestialObject {
   void display() {
     fill(col);
     noStroke();
-    ellipse(pos.x, pos.y, r * 2*visualScaling, r * 2*visualScaling);
+    ellipse(pos.x, pos.y, radius * 2*visualScaling, radius * 2*visualScaling);
   }
   
 }
