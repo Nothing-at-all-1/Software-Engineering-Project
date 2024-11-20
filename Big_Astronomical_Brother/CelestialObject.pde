@@ -66,10 +66,12 @@ class CelestialObject {
             case "gas":
 
               if (mass > other.mass){
+                float massRatio = (mass+other.mass)/mass;;
                 mass += other.mass;
                 other.mass = 0;
                 other.radius = floor(other.radius/1.1);
                 deleteCache.add(other);
+                this.radius *= pow(massRatio, 0.8);
               }
               
               break;
