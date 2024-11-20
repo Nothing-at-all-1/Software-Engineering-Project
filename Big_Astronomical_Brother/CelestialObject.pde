@@ -72,8 +72,18 @@ class CelestialObject {
                 other.radius = floor(other.radius/1.1);
                 deleteCache.add(other);
                 this.radius *= pow(massRatio, 0.8);
+                
+                
               }
               
+              if (mass < other.mass){
+               float massRatio = (mass+other.mass)/mass;;
+               other.mass += mass;
+               mass = 0;
+               this.radius = floor(this.radius/1.1);
+               deleteCache.add(this);
+               other.radius *= pow(massRatio, 0.8);
+              }
               break;
           }
           
