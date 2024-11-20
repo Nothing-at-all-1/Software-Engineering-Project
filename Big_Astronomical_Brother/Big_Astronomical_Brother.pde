@@ -95,13 +95,13 @@ void mousePressed(){
     switch (spawnedObject.getSelectedText()) {
       case "Asteroid":
         color asteroidColor = color(150, 150, 150);  
-        celestialObjects.add(new Asteroid(mass * pow(10, 12), spawnRadius, mousePos, vel, new PVector(0, 0), asteroidColor, "solid"));
+        celestialObjects.add(new Asteroid(mass * pow(10, exponentMass.getValueF()), spawnRadius, mousePos, vel, new PVector(0, 0), asteroidColor, "solid"));
         break;
        case "Planet":
-         celestialObjects.add(new Planet(mass * pow(10, 24), spawnRadius, mousePos, vel, new PVector(0, 0), color(100, 100, 200), "solid"));
+         celestialObjects.add(new Planet(mass * pow(10, exponentMass.getValueF()), spawnRadius, mousePos, vel, new PVector(0, 0), color(100, 100, 200), "solid"));
          break;
        case "Star":
-         celestialObjects.add(new Star(mass * pow(10, 30), spawnRadius, mousePos, vel, new PVector(0, 0), color(255, 255, 0), "gas", 5600));
+         celestialObjects.add(new Star(mass * pow(10, exponentMass.getValueF()), spawnRadius, mousePos, vel, new PVector(0, 0), color(255, 255, 0), "gas", 5600));
          break;
     }
   }

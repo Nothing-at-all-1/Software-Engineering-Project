@@ -21,13 +21,16 @@ synchronized public void win_draw1(PApplet appc, GWinData data) { //_CODE_:windo
 public void spawnedObjectChanged(GDropList source, GEvent event) { //_CODE_:spawnedObject:681934:
   switch (spawnedObject.getSelectedText()){
     case "Asteroid":
-      radius.setLimits(radius.getValueF(), 1, 10);
+      radius.setNumeric(1, 5, 1);
+      exponentMass.setNumeric(3, 20, 3);
       break;
     case "Planet":
-      radius.setLimits(radius.getValueF(), 0.5, 1);
+      radius.setNumeric(0.3, 8.7, 1);
+      exponentMass.setNumeric(19, 26, 19);
       break;
     case "Star":
-      radius.setLimits(radius.getValueF(), 10, 100);
+      radius.setNumeric(5.8, 400, 10);
+      exponentMass.setNumeric(30, 32, 30);
       break;
   }
 } //_CODE_:spawnedObject:681934:
@@ -37,17 +40,21 @@ public void timeStepChanged(GKnob source, GEvent event) { //_CODE_:timeStepContr
   timeRatio.setText("1 year every " + round(15*60/timeStep * pow(10, 3)) / pow(10, 3) + " seconds");
 } //_CODE_:timeStepControl:952075:
 
-public void radiusChanged(GSlider source, GEvent event) { //_CODE_:radius:996978:
-
-} //_CODE_:radius:996978:
-
 public void velocityChanged(GSlider2D source, GEvent event) { //_CODE_:velocity:936818:
 
 } //_CODE_:velocity:936818:
 
-public void spawnMassChanged(GSlider source, GEvent event) { //_CODE_:spawnMass:785904:
+public void radiusChanged(GTextField source, GEvent event) { //_CODE_:radius:965509:
+  println("radius - GTextField >> GEvent." + event + " @ " + millis());
+} //_CODE_:radius:965509:
 
-} //_CODE_:spawnMass:785904:
+public void spawnMassChanged(GTextField source, GEvent event) { //_CODE_:spawnMass:883847:
+  println("spawnMass - GTextField >> GEvent." + event + " @ " + millis());
+} //_CODE_:spawnMass:883847:
+
+public void exponentMassChanged(GTextField source, GEvent event) { //_CODE_:exponentMass:509216:
+  println("exponentMass - GTextField >> GEvent." + event + " @ " + millis());
+} //_CODE_:exponentMass:509216:
 
 
 
@@ -89,15 +96,6 @@ public void createGUI(){
   timeRatio.setTextAlign(GAlign.CENTER, GAlign.TOP);
   timeRatio.setText("My label");
   timeRatio.setOpaque(false);
-  radius = new GSlider(window1, 250, 40, 60, 60, 10.0);
-  radius.setShowValue(true);
-  radius.setShowLimits(true);
-  radius.setTextOrientation(G4P.ORIENT_LEFT);
-  radius.setRotation(PI/2, GControlMode.CORNER);
-  radius.setLimits(2, 1, 10);
-  radius.setNumberFormat(G4P.INTEGER, 0);
-  radius.setOpaque(false);
-  radius.addEventHandler(this, "radiusChanged");
   radiusLabel = new GLabel(window1, 190, 20, 60, 20);
   radiusLabel.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
   radiusLabel.setText("Radius");
@@ -112,19 +110,23 @@ public void createGUI(){
   velocityLabel.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
   velocityLabel.setText("Velocity");
   velocityLabel.setOpaque(false);
-  spawnMass = new GSlider(window1, 390, 40, 60, 60, 10.0);
-  spawnMass.setShowValue(true);
-  spawnMass.setShowLimits(true);
-  spawnMass.setTextOrientation(G4P.ORIENT_LEFT);
-  spawnMass.setRotation(PI/2, GControlMode.CORNER);
-  spawnMass.setLimits(1, 1, 10);
-  spawnMass.setNumberFormat(G4P.INTEGER, 0);
-  spawnMass.setOpaque(false);
-  spawnMass.addEventHandler(this, "spawnMassChanged");
   massLabel = new GLabel(window1, 330, 20, 60, 20);
   massLabel.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
   massLabel.setText("Mass");
   massLabel.setOpaque(false);
+  radius = new GTextField(window1, 190, 40, 60, 20, G4P.SCROLLBARS_NONE);
+  radius.setOpaque(true);
+  radius.addEventHandler(this, "radiusChanged");
+  spawnMass = new GTextField(window1, 330, 40, 60, 20, G4P.SCROLLBARS_NONE);
+  spawnMass.setOpaque(true);
+  spawnMass.addEventHandler(this, "spawnMassChanged");
+  exponentMassLabel = new GLabel(window1, 400, 20, 60, 20);
+  exponentMassLabel.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
+  exponentMassLabel.setText("*10^");
+  exponentMassLabel.setOpaque(false);
+  exponentMass = new GTextField(window1, 400, 40, 60, 20, G4P.SCROLLBARS_NONE);
+  exponentMass.setOpaque(false);
+  exponentMass.addEventHandler(this, "exponentMassChanged");
   window1.loop();
 }
 
@@ -136,9 +138,11 @@ GKnob timeStepControl;
 GLabel objectLabel; 
 GLabel timeLabel; 
 GLabel timeRatio; 
-GSlider radius; 
 GLabel radiusLabel; 
 GSlider2D velocity; 
 GLabel velocityLabel; 
-GSlider spawnMass; 
 GLabel massLabel; 
+GTextField radius; 
+GTextField spawnMass; 
+GLabel exponentMassLabel; 
+GTextField exponentMass; 
