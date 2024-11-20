@@ -31,6 +31,8 @@ class CelestialObject {
         float a = -g * other.mass / pow(dist / scalingFactor, 2);
         
         PVector direction = difference.normalize();
+        
+        println(other.mass);
 
         
         if (dist < other.radius * other.visualScaling + this.radius * this.visualScaling){
@@ -88,9 +90,7 @@ class CelestialObject {
           }
           
         }
-        
-        vel.add(direction.mult(a));
-        
+        //vel.add(direction.mult(a));
         acc.add(direction.mult(a));
 
       }

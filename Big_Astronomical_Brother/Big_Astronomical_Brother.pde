@@ -29,7 +29,7 @@ void reset() {
   deleteCache = new ArrayList<CelestialObject>();
   celestialObjects = new ArrayList<CelestialObject> () {{
 
-    add(new Star(1.989 * pow(10, 30), 69.634, center, new PVector(0, 0), new PVector(0, 0), color(255, 255, 0), "gas", 5600));
+    //add(new Star(1.989 * pow(10, 30), 69.634, center, new PVector(0, 0), new PVector(0, 0), color(255, 255, 0), "gas", 5600));
       
     for (int i = 0; i < 8; i++) {
       
@@ -44,7 +44,7 @@ void reset() {
       
       String type = selectedPlanet.getString("type");
       
-      add(new Planet(mass * pow(10, 24), radius, distance, startingVelocities[i], new PVector(0, 0), planetColor, type));
+      //add(new Planet(mass * pow(10, 24), radius, distance, startingVelocities[i], new PVector(0, 0), planetColor, type));
     
     }
     

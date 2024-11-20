@@ -45,15 +45,15 @@ public void velocityChanged(GSlider2D source, GEvent event) { //_CODE_:velocity:
 } //_CODE_:velocity:936818:
 
 public void radiusChanged(GTextField source, GEvent event) { //_CODE_:radius:965509:
-  println("radius - GTextField >> GEvent." + event + " @ " + millis());
+  //radius = radius.getValueF();
 } //_CODE_:radius:965509:
 
 public void spawnMassChanged(GTextField source, GEvent event) { //_CODE_:spawnMass:883847:
-  println("spawnMass - GTextField >> GEvent." + event + " @ " + millis());
+  //println("spawnMass - GTextField >> GEvent." + event + " @ " + millis());
 } //_CODE_:spawnMass:883847:
 
 public void exponentMassChanged(GTextField source, GEvent event) { //_CODE_:exponentMass:509216:
-  println("exponentMass - GTextField >> GEvent." + event + " @ " + millis());
+  //println("exponentMass - GTextField >> GEvent." + event + " @ " + millis());
 } //_CODE_:exponentMass:509216:
 
 
