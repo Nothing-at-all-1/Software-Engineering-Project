@@ -22,14 +22,17 @@ public void spawnedObjectChanged(GDropList source, GEvent event) { //_CODE_:spaw
   switch (spawnedObject.getSelectedText()){
     case "Asteroid":
       radius.setNumeric(1, 5, 1);
+      mass.setNumeric(0.1, 9.9, 1);
       exponentMass.setNumeric(3, 20, 3);
       break;
     case "Planet":
       radius.setNumeric(0.3, 8.7, 1);
+      mass.setNumeric(0.1, 9.9, 1);
       exponentMass.setNumeric(19, 26, 19);
       break;
     case "Star":
       radius.setNumeric(5.8, 400, 10);
+      mass.setNumeric(0.1, 9.9, 1);
       exponentMass.setNumeric(30, 32, 30);
       break;
   }
@@ -48,9 +51,9 @@ public void radiusChanged(GTextField source, GEvent event) { //_CODE_:radius:965
   //radius = radius.getValueF();
 } //_CODE_:radius:965509:
 
-public void spawnMassChanged(GTextField source, GEvent event) { //_CODE_:spawnMass:883847:
+public void massChanged(GTextField source, GEvent event) { //_CODE_:mass:883847:
   //println("spawnMass - GTextField >> GEvent." + event + " @ " + millis());
-} //_CODE_:spawnMass:883847:
+} //_CODE_:mass:883847:
 
 public void exponentMassChanged(GTextField source, GEvent event) { //_CODE_:exponentMass:509216:
   //println("exponentMass - GTextField >> GEvent." + event + " @ " + millis());
@@ -117,9 +120,9 @@ public void createGUI(){
   radius = new GTextField(window1, 190, 40, 60, 20, G4P.SCROLLBARS_NONE);
   radius.setOpaque(true);
   radius.addEventHandler(this, "radiusChanged");
-  spawnMass = new GTextField(window1, 330, 40, 60, 20, G4P.SCROLLBARS_NONE);
-  spawnMass.setOpaque(true);
-  spawnMass.addEventHandler(this, "spawnMassChanged");
+  mass = new GTextField(window1, 330, 40, 60, 20, G4P.SCROLLBARS_NONE);
+  mass.setOpaque(true);
+  mass.addEventHandler(this, "massChanged");
   exponentMassLabel = new GLabel(window1, 400, 20, 60, 20);
   exponentMassLabel.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
   exponentMassLabel.setText("*10^");
@@ -143,6 +146,6 @@ GSlider2D velocity;
 GLabel velocityLabel; 
 GLabel massLabel; 
 GTextField radius; 
-GTextField spawnMass; 
+GTextField mass; 
 GLabel exponentMassLabel; 
 GTextField exponentMass; 
