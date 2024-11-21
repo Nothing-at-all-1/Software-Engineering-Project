@@ -29,24 +29,24 @@ void reset() {
   deleteCache = new ArrayList<CelestialObject>();
   celestialObjects = new ArrayList<CelestialObject> () {{
 
-    add(new Star(1.989 * pow(10, 30), 69.634, center, new PVector(0, 0), new PVector(0, 0), color(255, 255, 0), "gas", 5600));
+    //add(new Star(1.989 * pow(10, 30), 69.634, center, new PVector(0, 0), new PVector(0, 0), color(255, 255, 0), "gas", 5600));
       
-    for (int i = 0; i < 8; i++) {
+    //for (int i = 0; i < 8; i++) {
       
-      JSONObject selectedPlanet = data.getJSONObject(i);
-      //String name = selectedPlanet.getString("name");
-      float mass = selectedPlanet.getFloat("mass");
-      float radius = selectedPlanet.getFloat("radius");
-      PVector distance = PVector.add(center, new PVector(sqrt(pow(selectedPlanet.getFloat("distance"), 2)/2),sqrt(pow(selectedPlanet.getFloat("distance"), 2)/2)));
+    //  JSONObject selectedPlanet = data.getJSONObject(i);
+    //  //String name = selectedPlanet.getString("name");
+    //  float mass = selectedPlanet.getFloat("mass");
+    //  float radius = selectedPlanet.getFloat("radius");
+    //  PVector distance = PVector.add(center, new PVector(sqrt(pow(selectedPlanet.getFloat("distance"), 2) / 2), sqrt(pow(selectedPlanet.getFloat("distance"), 2) / 2)));
       
-      JSONArray colorArray = selectedPlanet.getJSONArray("color"); 
-      color planetColor = color(colorArray.getInt(0), colorArray.getInt(1), colorArray.getInt(2));
+    //  JSONArray colorArray = selectedPlanet.getJSONArray("color"); 
+    //  color planetColor = color(colorArray.getInt(0), colorArray.getInt(1), colorArray.getInt(2));
       
-      String type = selectedPlanet.getString("type");
+    //  String type = selectedPlanet.getString("type");
       
-      add(new Planet(mass * pow(10, 24), radius, distance, startingVelocities[i], new PVector(0, 0), planetColor, type));
+    //  add(new Planet(mass * pow(10, 24), radius, distance, startingVelocities[i], new PVector(0, 0), planetColor, type));
     
-    }
+    //}
     
   }};
 

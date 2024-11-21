@@ -31,11 +31,12 @@ class CelestialObject {
         float a = -g * other.mass / pow(dist / scalingFactor, 2);
         
         PVector direction = difference.normalize();
-
+        
+        acc.add(direction.mult(a));
         
         if (dist < other.radius * other.visualScaling + this.radius * this.visualScaling){
           
-          switch (type){
+          switch (this.type) {
             case "solid":
             
               if (other.type == "solid"){
@@ -64,33 +65,35 @@ class CelestialObject {
               break;
               
             case "gas":
-
-              if (mass > other.mass){
+              float overlap = other.radius * other.visualScaling + this.radius * this.visualScaling - dist; //check
+ 
+              PVector adj = PVector.mult(direction, overlap / 2f);
+              
+              this.pos.add(adj);
+              other.pos.sub(adj);
+              
+              float normal = difference.dot(direction);
+              
+              if (normal < 0) {
+                //hit and stick collision formula
+                float impulse = (2 * normal) / (this.mass + other.mass);
+          
+                this.vel.sub(PVector.mult(direction, impulse * other.mass));
+                other.vel.add(PVector.mult(direction, impulse * this.mass));
+              
+              }
+              if (mass >= other.mass){
                 float massRatio = (mass+other.mass)/mass;;
                 mass += other.mass;
                 other.mass = 0;
                 other.radius = floor(other.radius/1.1);
                 deleteCache.add(other);
                 this.radius *= pow(massRatio, 0.8);
-                
-                
               }
-              
-              //if (mass < other.mass){
-              // float massRatio = (mass+other.mass)/mass;;
-              // other.mass += mass;
-              // mass = 0;
-              // other.radius = floor(other.radius/1.1);
-              // deleteCache.add(this);
-              // other.radius *= pow(massRatio, 0.8);
-              //}
               break;
           }
           
         }
-
-        acc.add(direction.mult(a));
-
       }
     }
   }
