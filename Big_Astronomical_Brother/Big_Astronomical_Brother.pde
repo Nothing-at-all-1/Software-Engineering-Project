@@ -29,24 +29,24 @@ void reset() {
   deleteCache = new ArrayList<CelestialObject>();
   celestialObjects = new ArrayList<CelestialObject> () {{
 
-    //add(new Star(1.989 * pow(10, 30), 69.634, center, new PVector(0, 0), new PVector(0, 0), color(255, 255, 0), "gas", 5600));
+    add(new Star(1.989 * pow(10, 30), 69.634, center, new PVector(0, 0), new PVector(0, 0), color(255, 255, 0), "gas", 5600));
       
-    //for (int i = 0; i < 8; i++) {
+    for (int i = 0; i < 8; i++) {
       
-    //  JSONObject selectedPlanet = data.getJSONObject(i);
-    //  //String name = selectedPlanet.getString("name");
-    //  float mass = selectedPlanet.getFloat("mass");
-    //  float radius = selectedPlanet.getFloat("radius");
-    //  PVector distance = PVector.add(center, new PVector(sqrt(pow(selectedPlanet.getFloat("distance"), 2) / 2), sqrt(pow(selectedPlanet.getFloat("distance"), 2) / 2)));
+      JSONObject selectedPlanet = data.getJSONObject(i);
+      //String name = selectedPlanet.getString("name");
+      float mass = selectedPlanet.getFloat("mass");
+      float radius = selectedPlanet.getFloat("radius");
+      PVector distance = PVector.add(center, new PVector(sqrt(pow(selectedPlanet.getFloat("distance"), 2) / 2), sqrt(pow(selectedPlanet.getFloat("distance"), 2) / 2)));
       
-    //  JSONArray colorArray = selectedPlanet.getJSONArray("color"); 
-    //  color planetColor = color(colorArray.getInt(0), colorArray.getInt(1), colorArray.getInt(2));
+      JSONArray colorArray = selectedPlanet.getJSONArray("color"); 
+      color planetColor = color(colorArray.getInt(0), colorArray.getInt(1), colorArray.getInt(2));
       
-    //  String type = selectedPlanet.getString("type");
+      String type = selectedPlanet.getString("type");
       
-    //  add(new Planet(mass * pow(10, 24), radius, distance, startingVelocities[i], new PVector(0, 0), planetColor, type));
+      add(new Planet(mass * pow(10, 24), radius, distance, startingVelocities[i], new PVector(0, 0), planetColor, type));
     
-    //}
+    }
     
   }};
 
@@ -54,13 +54,18 @@ void reset() {
 
 void setup() {
   
-  
-  
   size(600, 600);
   //noLoop();
   createGUI();
+  objectProperties.setVisible(false);
+  
+  spawnRadius.setNumeric(1.0, 5.0, 1.0);
+  spawnMass.setNumeric(0.1, 9.9, 1.0);
+  exponentMass.setNumeric(3.0, 20.0, 3.0);
+  
   timeRatio.setText("1 year every " + round(15*60/timeStep * pow(10, 3))/pow(10, 3) + " seconds");
   reset();
+  
 }
 
 void draw() {
@@ -70,6 +75,9 @@ void draw() {
   for (CelestialObject co : celestialObjects) {
     co.display();
     co.update();
+    
+    
+    
   }
   
   for (CelestialObject del : deleteCache){
@@ -84,23 +92,57 @@ void mousePressed(){
   
   boolean mouseOverObject = false;
   PVector mousePos = new PVector(mouseX, mouseY); 
+  CelestialObject targetObject = null;
+  
   for (CelestialObject co : celestialObjects) {
-    mouseOverObject = (PVector.dist(mousePos, co.pos) < co.radius*co.visualScaling)?true:false;
+    if (PVector.dist(mousePos, co.pos) < co.radius*co.visualScaling) {
+      mouseOverObject = true;
+      targetObject = co;
+      break;
+    }
   }
   
   if (!mouseOverObject) {
+    
+    objectProperties.setVisible(false);
+    if (targetObject != null) for (int i = 0; i < celestialObjects.size(); i++) if (celestialObjects.get(i) == targetObject){
+       celestialObjects.get(i).stroke = color(0);
+    }
+    
     switch (spawnedObject.getSelectedText()) {
       case "Asteroid":
-        color asteroidColor = color(150, 150, 150);  
-        celestialObjects.add(new Asteroid(mass.getValueF() * pow(10, exponentMass.getValueF()), radius.getValueF(), mousePos, new PVector(velocity.getValueXF(), velocity.getValueYF()), new PVector(0, 0), asteroidColor, "solid"));
+        celestialObjects.add(new Asteroid(spawnMass.getValueF() * pow(10, exponentMass.getValueF()), spawnRadius.getValueF(), mousePos, new PVector(velocity.getValueXF(), velocity.getValueYF()), new PVector(0, 0), color(150, 150, 150), "solid"));
         break;
        case "Planet":
-         celestialObjects.add(new Planet(mass.getValueF() * pow(10, exponentMass.getValueF()), radius.getValueF(), mousePos, new PVector(velocity.getValueXF(), velocity.getValueYF()), new PVector(0, 0), color(100, 100, 200), "solid"));
+         celestialObjects.add(new Planet(spawnMass.getValueF() * pow(10, exponentMass.getValueF()), spawnRadius.getValueF(), mousePos, new PVector(velocity.getValueXF(), velocity.getValueYF()), new PVector(0, 0), color(100, 100, 200), "solid"));
          break;
        case "Star":
-         celestialObjects.add(new Star(mass.getValueF() * pow(10, exponentMass.getValueF()), radius.getValueF(), mousePos, new PVector(velocity.getValueXF(), velocity.getValueYF()), new PVector(0, 0), color(255, 255, 0), "gas", 5600));
+         celestialObjects.add(new Star(spawnMass.getValueF() * pow(10, exponentMass.getValueF()), spawnRadius.getValueF(), mousePos, new PVector(velocity.getValueXF(), velocity.getValueYF()), new PVector(0, 0), color(255, 255, 0), "gas", 5600));
          break;
     }
-  }
+  } 
+  
+  else {
+    
+    objectProperties.setVisible(true);
+    if (targetObject != null) for (int i = 0; i < celestialObjects.size(); i++) if (celestialObjects.get(i) == targetObject){
+      celestialObjects.get(i).stroke = lerpColor(targetObject.col, color(255), 0.33);
+    }
+      
+    if (targetObject != null){
+      
+        switch (targetObject.getClass().getName()){
+          
+          case "Planet":
+            //don't add break here
+          case "Asteroid":
+    
+            break;
+          case "Star":
+            break;
+        }
+      
+      }
+    }
 
 }

@@ -14,25 +14,25 @@
  * =========================================================
  */
 
-synchronized public void win_draw1(PApplet appc, GWinData data) { //_CODE_:window1:393323:
+synchronized public void controlPanelDraw(PApplet appc, GWinData data) { //_CODE_:controlPanel:393323:
   appc.background(230);
-} //_CODE_:window1:393323:
+} //_CODE_:controlPanel:393323:
 
 public void spawnedObjectChanged(GDropList source, GEvent event) { //_CODE_:spawnedObject:681934:
   switch (spawnedObject.getSelectedText()){
     case "Asteroid":
-      radius.setNumeric(1.0, 5.0, 1.0);
-      mass.setNumeric(0.1, 9.9, 1.0);
+      spawnRadius.setNumeric(1.0, 5.0, 1.0);
+      spawnMass.setNumeric(0.1, 9.9, 1.0);
       exponentMass.setNumeric(3.0, 20.0, 3.0);
       break;
     case "Planet":
-      radius.setNumeric(0.3, 8.7, 1.0);
-      mass.setNumeric(0.1, 9.9, 1.0);
+      spawnRadius.setNumeric(0.3, 8.7, 1.0);
+      spawnMass.setNumeric(0.1, 9.9, 1.0);
       exponentMass.setNumeric(19.0, 26.0, 19.0);
       break;
     case "Star":
-      radius.setNumeric(5.8, 400.0, 10.0);
-      mass.setNumeric(0.1, 9.9, 1.0);
+      spawnRadius.setNumeric(5.8, 400.0, 10.0);
+      spawnMass.setNumeric(0.1, 9.9, 1.0);
       exponentMass.setNumeric(30.0, 32.0, 30.0);
       break;
   }
@@ -47,17 +47,21 @@ public void velocityChanged(GSlider2D source, GEvent event) { //_CODE_:velocity:
 
 } //_CODE_:velocity:936818:
 
-public void radiusChanged(GTextField source, GEvent event) { //_CODE_:radius:965509:
-  //radius = radius.getValueF();
-} //_CODE_:radius:965509:
+public void radiusChanged(GTextField source, GEvent event) { //_CODE_:spawnRadius:965509:
 
-public void massChanged(GTextField source, GEvent event) { //_CODE_:mass:883847:
-  //println("spawnMass - GTextField >> GEvent." + event + " @ " + millis());
-} //_CODE_:mass:883847:
+} //_CODE_:spawnRadius:965509:
+
+public void massChanged(GTextField source, GEvent event) { //_CODE_:spawnMass:883847:
+
+} //_CODE_:spawnMass:883847:
 
 public void exponentMassChanged(GTextField source, GEvent event) { //_CODE_:exponentMass:509216:
-  //println("exponentMass - GTextField >> GEvent." + event + " @ " + millis());
+  
 } //_CODE_:exponentMass:509216:
+
+synchronized public void propertiesChanged(PApplet appc, GWinData data) { //_CODE_:objectProperties:848126:
+  appc.background(230);
+} //_CODE_:objectProperties:848126:
 
 
 
@@ -67,15 +71,15 @@ public void createGUI(){
   G4P.messagesEnabled(false);
   G4P.setGlobalColorScheme(GCScheme.BLUE_SCHEME);
   G4P.setMouseOverEnabled(false);
-  surface.setTitle("Sketch Window");
-  window1 = GWindow.getWindow(this, "Window title", 0, 0, 480, 140, JAVA2D);
-  window1.noLoop();
-  window1.setActionOnClose(G4P.EXIT_APP);
-  window1.addDrawHandler(this, "win_draw1");
-  spawnedObject = new GDropList(window1, 20, 40, 80, 80, 3, 10);
+  surface.setTitle("Big Astronomical Brother");
+  controlPanel = GWindow.getWindow(this, "Control Panel", 0, 0, 480, 140, JAVA2D);
+  controlPanel.noLoop();
+  controlPanel.setActionOnClose(G4P.EXIT_APP);
+  controlPanel.addDrawHandler(this, "controlPanelDraw");
+  spawnedObject = new GDropList(controlPanel, 20, 40, 80, 80, 3, 10);
   spawnedObject.setItems(loadStrings("list_681934"), 0);
   spawnedObject.addEventHandler(this, "spawnedObjectChanged");
-  timeStepControl = new GKnob(window1, 120, 40, 60, 60, 0.8);
+  timeStepControl = new GKnob(controlPanel, 120, 40, 60, 60, 0.8);
   timeStepControl.setTurnRange(0, 360);
   timeStepControl.setTurnMode(GKnob.CTRL_ANGULAR);
   timeStepControl.setShowArcOnly(false);
@@ -87,55 +91,67 @@ public void createGUI(){
   timeStepControl.setShowTicks(true);
   timeStepControl.setOpaque(false);
   timeStepControl.addEventHandler(this, "timeStepChanged");
-  objectLabel = new GLabel(window1, 20, 20, 80, 20);
+  objectLabel = new GLabel(controlPanel, 20, 20, 80, 20);
   objectLabel.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
   objectLabel.setText("Object Type");
   objectLabel.setOpaque(false);
-  timeLabel = new GLabel(window1, 120, 0, 60, 40);
+  timeLabel = new GLabel(controlPanel, 120, 0, 60, 40);
   timeLabel.setTextAlign(GAlign.CENTER, GAlign.BOTTOM);
   timeLabel.setText("Time Modifier");
   timeLabel.setOpaque(false);
-  timeRatio = new GLabel(window1, 90, 100, 120, 40);
+  timeRatio = new GLabel(controlPanel, 90, 100, 120, 40);
   timeRatio.setTextAlign(GAlign.CENTER, GAlign.TOP);
   timeRatio.setText("My label");
   timeRatio.setOpaque(false);
-  radiusLabel = new GLabel(window1, 190, 20, 60, 20);
+  radiusLabel = new GLabel(controlPanel, 190, 20, 60, 20);
   radiusLabel.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
   radiusLabel.setText("Radius");
   radiusLabel.setOpaque(false);
-  velocity = new GSlider2D(window1, 260, 40, 60, 60);
+  velocity = new GSlider2D(controlPanel, 260, 40, 60, 60);
   velocity.setLimitsX(0.0, -1.0, 1.0);
   velocity.setLimitsY(0.0, -1.0, 1.0);
   velocity.setNumberFormat(G4P.DECIMAL, 2);
   velocity.setOpaque(true);
   velocity.addEventHandler(this, "velocityChanged");
-  velocityLabel = new GLabel(window1, 260, 20, 60, 20);
+  velocityLabel = new GLabel(controlPanel, 260, 20, 60, 20);
   velocityLabel.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
   velocityLabel.setText("Velocity");
   velocityLabel.setOpaque(false);
-  massLabel = new GLabel(window1, 330, 20, 60, 20);
+  massLabel = new GLabel(controlPanel, 330, 20, 60, 20);
   massLabel.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
   massLabel.setText("Mass");
   massLabel.setOpaque(false);
-  radius = new GTextField(window1, 190, 40, 60, 20, G4P.SCROLLBARS_NONE);
-  radius.setOpaque(true);
-  radius.addEventHandler(this, "radiusChanged");
-  mass = new GTextField(window1, 330, 40, 60, 20, G4P.SCROLLBARS_NONE);
-  mass.setOpaque(true);
-  mass.addEventHandler(this, "massChanged");
-  exponentMassLabel = new GLabel(window1, 400, 20, 60, 20);
+  spawnRadius = new GTextField(controlPanel, 190, 40, 60, 20, G4P.SCROLLBARS_NONE);
+  spawnRadius.setText("1");
+  spawnRadius.setOpaque(true);
+  spawnRadius.addEventHandler(this, "radiusChanged");
+  spawnMass = new GTextField(controlPanel, 330, 40, 60, 20, G4P.SCROLLBARS_NONE);
+  spawnMass.setText("1");
+  spawnMass.setOpaque(true);
+  spawnMass.addEventHandler(this, "massChanged");
+  exponentMassLabel = new GLabel(controlPanel, 400, 20, 60, 20);
   exponentMassLabel.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
   exponentMassLabel.setText("*10^");
   exponentMassLabel.setOpaque(false);
-  exponentMass = new GTextField(window1, 400, 40, 60, 20, G4P.SCROLLBARS_NONE);
+  exponentMass = new GTextField(controlPanel, 400, 40, 60, 20, G4P.SCROLLBARS_NONE);
+  exponentMass.setText("10");
   exponentMass.setOpaque(true);
   exponentMass.addEventHandler(this, "exponentMassChanged");
-  window1.loop();
+  objectProperties = GWindow.getWindow(this, "Object Properties", 0, 180, 120, 120, JAVA2D);
+  objectProperties.noLoop();
+  objectProperties.setActionOnClose(G4P.CLOSE_WINDOW);
+  objectProperties.addDrawHandler(this, "propertiesChanged");
+  radius = new GLabel(objectProperties, 20, 20, 60, 20);
+  radius.setText("finish this later");
+  radius.setTextBold();
+  radius.setOpaque(false);
+  controlPanel.loop();
+  objectProperties.loop();
 }
 
 // Variable declarations 
 // autogenerated do not edit
-GWindow window1;
+GWindow controlPanel;
 GDropList spawnedObject; 
 GKnob timeStepControl; 
 GLabel objectLabel; 
@@ -145,7 +161,9 @@ GLabel radiusLabel;
 GSlider2D velocity; 
 GLabel velocityLabel; 
 GLabel massLabel; 
-GTextField radius; 
-GTextField mass; 
+GTextField spawnRadius; 
+GTextField spawnMass; 
 GLabel exponentMassLabel; 
 GTextField exponentMass; 
+GWindow objectProperties;
+GLabel radius; 

@@ -4,6 +4,7 @@ class CelestialObject {
   PVector pos, vel, acc;
   color col;
   String type;
+  color stroke = color(0);
   //Intializes the variables when it is created
   CelestialObject(float m, float r, PVector p, PVector v, PVector a, color c, String t) {
     this.mass = m;
@@ -100,7 +101,8 @@ class CelestialObject {
   
   void display() {
     fill(col);
-    noStroke();
+    stroke(stroke);
+    strokeWeight( radius * visualScaling / 10f);
     ellipse(pos.x, pos.y, radius * 2*visualScaling, radius * 2*visualScaling);
   }
   
