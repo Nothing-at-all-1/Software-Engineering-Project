@@ -84,9 +84,6 @@ void mousePressed(){
   
   boolean mouseOverObject = false;
   PVector mousePos = new PVector(mouseX, mouseY); 
-  float spawnRadius = radius.getValueF();
-  PVector vel = new PVector(velocity.getValueXF(), velocity.getValueYF());
-  float mass = spawnMass.getValueF();
   for (CelestialObject co : celestialObjects) {
     mouseOverObject = (PVector.dist(mousePos, co.pos) < co.radius*co.visualScaling)?true:false;
   }
@@ -95,13 +92,13 @@ void mousePressed(){
     switch (spawnedObject.getSelectedText()) {
       case "Asteroid":
         color asteroidColor = color(150, 150, 150);  
-        celestialObjects.add(new Asteroid(mass * pow(10, exponentMass.getValueF()), spawnRadius, mousePos, vel, new PVector(0, 0), asteroidColor, "solid"));
+        celestialObjects.add(new Asteroid(spawnMass.getValueF() * pow(10, exponentMass.getValueF()), radius.getValueF(), mousePos, new PVector(velocity.getValueXF(), velocity.getValueYF()), new PVector(0, 0), asteroidColor, "solid"));
         break;
        case "Planet":
-         celestialObjects.add(new Planet(mass * pow(10, exponentMass.getValueF()), spawnRadius, mousePos, vel, new PVector(0, 0), color(100, 100, 200), "solid"));
+         celestialObjects.add(new Planet(spawnMass.getValueF() * pow(10, exponentMass.getValueF()), radius.getValueF(), mousePos, new PVector(velocity.getValueXF(), velocity.getValueYF()), new PVector(0, 0), color(100, 100, 200), "solid"));
          break;
        case "Star":
-         celestialObjects.add(new Star(mass * pow(10, exponentMass.getValueF()), spawnRadius, mousePos, vel, new PVector(0, 0), color(255, 255, 0), "gas", 5600));
+         celestialObjects.add(new Star(spawnMass.getValueF() * pow(10, exponentMass.getValueF()), radius.getValueF(), mousePos, new PVector(velocity.getValueXF(), velocity.getValueYF()), new PVector(0, 0), color(255, 255, 0), "gas", 5600));
          break;
     }
   }
