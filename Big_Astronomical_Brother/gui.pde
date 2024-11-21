@@ -21,19 +21,19 @@ synchronized public void win_draw1(PApplet appc, GWinData data) { //_CODE_:windo
 public void spawnedObjectChanged(GDropList source, GEvent event) { //_CODE_:spawnedObject:681934:
   switch (spawnedObject.getSelectedText()){
     case "Asteroid":
-      radius.setNumeric(1, 5, 1);
-      mass.setNumeric(0.1, 9.9, 1);
-      exponentMass.setNumeric(3, 20, 3);
+      radius.setNumeric(1.0, 5.0, 1.0);
+      mass.setNumeric(0.1, 9.9, 1.0);
+      exponentMass.setNumeric(3.0, 20.0, 3.0);
       break;
     case "Planet":
-      radius.setNumeric(0.3, 8.7, 1);
-      mass.setNumeric(0.1, 9.9, 1);
-      exponentMass.setNumeric(19, 26, 19);
+      radius.setNumeric(0.3, 8.7, 1.0);
+      mass.setNumeric(0.1, 9.9, 1.0);
+      exponentMass.setNumeric(19.0, 26.0, 19.0);
       break;
     case "Star":
-      radius.setNumeric(5.8, 400, 10);
-      mass.setNumeric(0.1, 9.9, 1);
-      exponentMass.setNumeric(30, 32, 30);
+      radius.setNumeric(5.8, 400.0, 10.0);
+      mass.setNumeric(0.1, 9.9, 1.0);
+      exponentMass.setNumeric(30.0, 32.0, 30.0);
       break;
   }
 } //_CODE_:spawnedObject:681934:
@@ -128,7 +128,7 @@ public void createGUI(){
   exponentMassLabel.setText("*10^");
   exponentMassLabel.setOpaque(false);
   exponentMass = new GTextField(window1, 400, 40, 60, 20, G4P.SCROLLBARS_NONE);
-  exponentMass.setOpaque(false);
+  exponentMass.setOpaque(true);
   exponentMass.addEventHandler(this, "exponentMassChanged");
   window1.loop();
 }

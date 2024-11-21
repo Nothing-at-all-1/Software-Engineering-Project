@@ -31,8 +31,6 @@ class CelestialObject {
         float a = -g * other.mass / pow(dist / scalingFactor, 2);
         
         PVector direction = difference.normalize();
-        
-        println(other.mass);
 
         
         if (dist < other.radius * other.visualScaling + this.radius * this.visualScaling){
@@ -78,19 +76,19 @@ class CelestialObject {
                 
               }
               
-              if (mass < other.mass){
-               float massRatio = (mass+other.mass)/mass;;
-               other.mass += mass;
-               mass = 0;
-               other.radius = floor(other.radius/1.1);
-               deleteCache.add(this);
-               other.radius *= pow(massRatio, 0.8);
-              }
+              //if (mass < other.mass){
+              // float massRatio = (mass+other.mass)/mass;;
+              // other.mass += mass;
+              // mass = 0;
+              // other.radius = floor(other.radius/1.1);
+              // deleteCache.add(this);
+              // other.radius *= pow(massRatio, 0.8);
+              //}
               break;
           }
           
         }
-        //vel.add(direction.mult(a));
+
         acc.add(direction.mult(a));
 
       }
