@@ -101,16 +101,15 @@ class CelestialObject {
   
   void display() {
     fill(col);
+    if (!isSelected) {
+      stroke = 0;
+    }
+    else {
+      stroke = 255;
+    }
     stroke(stroke);
     strokeWeight( radius * visualScaling / 10f);
     ellipse(pos.x, pos.y, radius * 2*visualScaling, radius * 2*visualScaling);
   }
-  
-  void displayStatistics() {
-    if (this.isSelected) {
-      stroke(255);
-      
-    }
-  }
-  
+    
 }
