@@ -93,6 +93,7 @@ void mousePressed(){
   
   boolean mouseOverObject = false;
   PVector mousePos = new PVector(mouseX, mouseY); 
+  CelestialObject object = null;
   
   for (CelestialObject co : celestialObjects) {
     if (PVector.dist(mousePos, co.pos) < co.radius*co.visualScaling) {
@@ -105,7 +106,8 @@ void mousePressed(){
   if (!mouseOverObject) {
     
     objectProperties.setVisible(false);
-    object.isSelected = false;
+    //object = null;
+    //object.isSelected = false;
 
     switch (spawnedObject.getSelectedText()) {
       case "Asteroid":
@@ -122,4 +124,5 @@ void mousePressed(){
   else {
     objectProperties.setVisible(true);
     object.isSelected = true;
+  }
 }
