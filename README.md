@@ -1,2 +1,3 @@
 # Software Engineering Project
  
+The Big Astronomical Brother is a Processing program that simulates the interactions between planets and other celestial bodies. This application creates a visual display of different celestial bodies staying within an orbit, colliding, and other astrophysical mechanics within a solar system. It replicates the various other components of the universe, such as the mass, velocity, radius, etcetera, of the various simulated bodies. The program also allows you to create your own celestial bodies and push celestial bodies with a certain force.
