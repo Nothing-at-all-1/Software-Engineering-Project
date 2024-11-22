@@ -6,7 +6,6 @@ float timeStep = 60;
 
 ArrayList<CelestialObject> celestialObjects;
 ArrayList<CelestialObject> deleteCache;
-ArrayList<CelestialObject> isSelected;
 CelestialObject object = new CelestialObject(0, 0, new PVector(0, 0), new PVector(0, 0), new PVector(0, 0), 0, "");
 
 JSONArray data;
@@ -76,10 +75,7 @@ void draw() {
 
   for (CelestialObject co : celestialObjects) {
     co.display();
-    co.update();
-    
-    
-    
+    co.update(); 
   }
   
   for (CelestialObject del : deleteCache){
@@ -95,6 +91,7 @@ void mousePressed(){
   boolean mouseOverObject = false;
   PVector mousePos = new PVector(mouseX, mouseY); 
   object.isSelected = false;
+  
   for (CelestialObject co : celestialObjects) {
     if (PVector.dist(mousePos, co.pos) < co.radius * co.visualScaling) {
       mouseOverObject = true;
@@ -106,7 +103,6 @@ void mousePressed(){
   if (!mouseOverObject) {
     
     objectProperties.setVisible(false);
-    object.isSelected = false;
     object = new CelestialObject(0, 0, new PVector(0, 0), new PVector(0, 0), new PVector(0, 0), 0, "");
 
     switch (spawnedObject.getSelectedText()) {
