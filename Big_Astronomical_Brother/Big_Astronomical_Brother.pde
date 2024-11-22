@@ -7,6 +7,7 @@ float timeStep = 60;
 ArrayList<CelestialObject> celestialObjects;
 ArrayList<CelestialObject> deleteCache;
 ArrayList<CelestialObject> isSelected;
+CelestialObject object = new CelestialObject(0, 0, new PVector(0, 0), new PVector(0, 0), new PVector(0, 0), 0, "");
 
 JSONArray data;
 
@@ -93,10 +94,9 @@ void mousePressed(){
   
   boolean mouseOverObject = false;
   PVector mousePos = new PVector(mouseX, mouseY); 
-  CelestialObject object = new CelestialObject(0, 0, new PVector(0, 0), new PVector(0, 0), new PVector(0, 0), 0, "gas");
   
   for (CelestialObject co : celestialObjects) {
-    if (PVector.dist(mousePos, co.pos) < co.radius*co.visualScaling) {
+    if (PVector.dist(mousePos, co.pos) < co.radius * co.visualScaling) {
       mouseOverObject = true;
       object = co;
       break;
@@ -107,6 +107,7 @@ void mousePressed(){
     
     objectProperties.setVisible(false);
     object.isSelected = false;
+    object = new CelestialObject(0, 0, new PVector(0, 0), new PVector(0, 0), new PVector(0, 0), 0, "");
 
     switch (spawnedObject.getSelectedText()) {
       case "Asteroid":
@@ -121,6 +122,7 @@ void mousePressed(){
     }
   }
   else {
+    object.isSelected = false;
     objectProperties.setVisible(true);
     object.isSelected = true;
   }
