@@ -94,7 +94,7 @@ void mousePressed(){
   
   boolean mouseOverObject = false;
   PVector mousePos = new PVector(mouseX, mouseY); 
-  
+  object.isSelected = false;
   for (CelestialObject co : celestialObjects) {
     if (PVector.dist(mousePos, co.pos) < co.radius * co.visualScaling) {
       mouseOverObject = true;
@@ -122,7 +122,6 @@ void mousePressed(){
     }
   }
   else {
-    object.isSelected = false;
     objectProperties.setVisible(true);
     object.isSelected = true;
   }
