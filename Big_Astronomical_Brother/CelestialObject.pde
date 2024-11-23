@@ -43,8 +43,8 @@ class CelestialObject {
           switch (this.type) {
             
             case "solid":
-            
-              if (other.type == "solid"){
+              
+              if (other.type.equals("solid")){
               
                 float overlap = other.radius * other.visualScaling + this.radius * this.visualScaling - dist; //check
    

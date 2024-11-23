@@ -107,15 +107,12 @@ void mousePressed(){
   for (CelestialObject co : celestialObjects) {
     if (PVector.dist(mousePos, co.pos) < co.radius * co.visualScaling) {
       mouseOverObject = true;
-      object = co;
       break;
     }
   }
   
   if (!mouseOverObject) {
     
-    object = new CelestialObject("", 0, 0, new PVector(0, 0), new PVector(0, 0), new PVector(0, 0), 0, "");
-
     switch (spawnedObject.getSelectedText()) {
       case "Asteroid":
         celestialObjects.add(new Asteroid("", spawnMass.getValueF() * pow(10, exponentMass.getValueF()), spawnRadius.getValueF(), mousePos, new PVector(spawnVelocity.getValueXF(), spawnVelocity.getValueYF()), new PVector(0, 0), color(150, 150, 150), "solid"));
