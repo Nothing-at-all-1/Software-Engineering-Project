@@ -18,25 +18,24 @@ class CelestialObject {
   }
   
   void update() {
+    
     vel.add(acc);
-    pos.add(vel);
-    acc.setMag(0);
+    pos.add(vel);    //basic physics right
+    acc.setMag(0);    //you have to reset the acceleration since it is different every time
     
     for (CelestialObject other : celestialObjects){
       
-      if (other != this){
+      if (other != this){    //doesn't collide with self
         
-        float g = 6.6743 * pow(10, -11);
+        float g = 6.6743 * pow(10, -11);    //gravitational constant
         
         PVector difference = PVector.sub(this.pos, other.pos);
         
         float dist = difference.mag();
         
-        float a = -g * other.mass / pow(dist / scalingFactor, 2);
+        float a = -g * other.mass / pow(dist / scalingFactor, 2);    //gravity force (acceleration)
         
         PVector direction = difference.normalize();
-        
-        acc.add(direction.mult(a));
         
         if (dist < other.radius * other.visualScaling + this.radius * this.visualScaling){
           
@@ -44,23 +43,23 @@ class CelestialObject {
             
             case "solid":
               
-              if (other.type.equals("solid")){
+              if (other.type =="solid"){    //collisions only happen when both are solid
               
                 float overlap = other.radius * other.visualScaling + this.radius * this.visualScaling - dist; //check
    
                 PVector adj = PVector.mult(direction, overlap / 2f);
                 
                 this.pos.add(adj);
-                other.pos.sub(adj);
+                other.pos.sub(adj);    //prevent overlap
                 
-                float normal = difference.dot(direction);
+                float normal = difference.dot(direction);    
                 
-                if (normal < 0) {
+                if (normal < 0) {    
                   //hit and stick collision formula
                   float impulse = (2 * normal) / (this.mass + other.mass);
             
                   this.vel.sub(PVector.mult(direction, impulse * other.mass));
-                  other.vel.add(PVector.mult(direction, impulse * this.mass));
+                  other.vel.add(PVector.mult(direction, impulse * this.mass));    //collisions depend on mass
                 
                 }
                 
@@ -75,14 +74,17 @@ class CelestialObject {
                 mass += other.mass;
                 other.mass = 0;
                 other.radius = 0;
-                deleteCache.add(other);
+                deleteCache.add(other);    //deleteing
                 this.radius *= pow(massRatio, 0.8);
-                this.temp *= sqrt((this.temp + other.temp)/this.temp); 
+                this.temp *= sqrt((this.temp + other.temp)/this.temp);    //formula for the sun color
               }
               break;
             
           }
         }
+        
+        acc.add(direction.mult(a));    //adding gravity
+        
       }
     }
   }

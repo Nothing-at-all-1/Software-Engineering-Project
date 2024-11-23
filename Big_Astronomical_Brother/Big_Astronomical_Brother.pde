@@ -1,7 +1,7 @@
 import g4p_controls.*;
 
-float scalingFactor = pow(10, -9);    //you're not really supposed to change this
-float timeStep = 60;
+float scalingFactor = pow(10, -9);    //you're not really supposed to change this, since the positons would also need to be scaled
+float timeStep = 60;    //this can be changed in the gui anyways
 
 ArrayList<CelestialObject> celestialObjects;    //array of everything
 ArrayList<CelestialObject> deleteCache;    //i couldn't thinkof an easier way to do this
@@ -105,7 +105,11 @@ void draw() {
     }
   }
   
+  //deleting the objects
+  
   deleteCache.clear();
+  
+  //clearing the cache
   
 }
 
