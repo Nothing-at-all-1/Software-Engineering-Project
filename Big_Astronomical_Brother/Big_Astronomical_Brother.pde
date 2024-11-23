@@ -4,25 +4,28 @@ float scalingFactor = pow(10, -9);
 float timeStep = 60;
 PVector scalingDimensions = new PVector(600, 600);
 
+int numAsteroids = 10; //THIS WILL DECREASE THE FRAMERATE, DOESN'T WORK WELL WITH TIMESTEP
+
 ArrayList<CelestialObject> celestialObjects;
 ArrayList<CelestialObject> deleteCache;
 CelestialObject object = new CelestialObject("", 0, 0, new PVector(0, 0), new PVector(0, 0), new PVector(0, 0), 0, "");
 
 JSONArray data;
 
-PVector[] startingVelocities = {  //change these so it works or is accurate
-  new PVector(1, -1),
-  new PVector(0.75, -0.75),
-  new PVector(0.66, -0.66),
-  new PVector(0.5, -0.5),
-  new PVector(0.5, -0.5),
-  new PVector(0.5, -0.5),
-  new PVector(0.5, -0.5),
-  new PVector(0.5, -0.5),
-  new PVector(0.5, -0.5)
-};
-
 void reset() {
+  
+  
+  PVector[] startingVelocities = {  //these are largely arbitrary
+    new PVector(1, -1),
+    new PVector(0.75, -0.75),
+    new PVector(0.66, -0.66),
+    new PVector(0.5, -0.5),
+    new PVector(0.5, -0.5),
+    new PVector(0.5, -0.5),
+    new PVector(0.5, -0.5),
+    new PVector(0.5, -0.5),
+    new PVector(0.5, -0.5)
+  };
   
   data = loadJSONArray("data.json");
   PVector center = new PVector (width/2, height/2);
@@ -46,7 +49,18 @@ void reset() {
       String type = selectedPlanet.getString("type");
       
       add(new Planet(name, mass * pow(10, 24), radius, distance, startingVelocities[i], new PVector(0, 0), planetColor, type));
-    
+      
+      float beltDistance = 329;
+
+      for (int j = 0; j < numAsteroids; j++) {
+  
+        float angle = j * TWO_PI / numAsteroids;
+        PVector velocity = new PVector(-sin(angle) * 0.65, cos(angle) * 0.65); 
+        PVector position = PVector.sub(center, new PVector(cos(angle), sin(angle)).mult(beltDistance + random(150)));
+        
+        add(new Asteroid("", random(0.1, 1.0) * pow(10, 15), random(0.5, 2), position, velocity, new PVector(0, 0), color(150, 150, 150), "solid"));
+      }
+      
     }
     
   }};
@@ -59,17 +73,6 @@ void setup() {
   //noLoop();
   createGUI();
   
-  objectProperties.setVisible(false);
-  extraInput.setVisible(false);
-  input2D.setVisible(false);
-  typeList.setVisible(false);
-  
-  eiLabel.setVisible(false);
-  i2dLabel.setVisible(false);
-  tLabel.setVisible(false);
-  
-  ifLabel.setText("Name");
-  
   spawnRadius.setNumeric(1.0, 5.0, 1.0);
   spawnMass.setNumeric(0.1, 9.9, 1.0);
   exponentMass.setNumeric(3.0, 20.0, 3.0);
@@ -80,6 +83,7 @@ void setup() {
 }
 
 void draw() {
+  
   background(0);
   frameRate(timeStep);
 
@@ -93,6 +97,8 @@ void draw() {
       celestialObjects.remove(del);
     }
   }
+  
+  deleteCache.clear();
   
 }
 
@@ -112,7 +118,6 @@ void mousePressed(){
   
   if (!mouseOverObject) {
     
-    objectProperties.setVisible(false);
     object = new CelestialObject("", 0, 0, new PVector(0, 0), new PVector(0, 0), new PVector(0, 0), 0, "");
 
     switch (spawnedObject.getSelectedText()) {
@@ -127,24 +132,5 @@ void mousePressed(){
          break;
     }
   }
-  else {
-    switch (object.getClass().getName()){
-      case "Asteroid":
-
-      case "Planet":
-      
-
-        
-        break;
-      case "Star":
-         
-         
-        
-        break;
-    }
-    object.displayProperties();
-  }
-      
-      
   
 }

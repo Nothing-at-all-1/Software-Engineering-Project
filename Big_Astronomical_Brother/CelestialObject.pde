@@ -96,14 +96,5 @@ class CelestialObject {
     strokeWeight(strokeWeight);
     ellipse(pos.x, pos.y, radius * 2*visualScaling, radius * 2*visualScaling);
   }
-  
-  void displayProperties() {
-    
-    objectProperties.setVisible(true);
-    this.isSelected = true;    
-    
-
-    
-  }
     
 }

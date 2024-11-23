@@ -59,44 +59,9 @@ public void exponentMassChanged(GTextField source, GEvent event) { //_CODE_:expo
   
 } //_CODE_:exponentMass:509216:
 
-synchronized public void propertiesChanged(PApplet appc, GWinData data) { //_CODE_:objectProperties:848126:
-  appc.background(230);
-} //_CODE_:objectProperties:848126:
-
-public void inputChanged(GTextField source, GEvent event) { //_CODE_:inputField:889161:
-  //println("textfield1 - GTextField >> GEvent." + event + " @ " + millis());
-} //_CODE_:inputField:889161:
-
-public void input2DChanged(GSlider2D source, GEvent event) { //_CODE_:input2D:828822:
-  //println("input2D - GSlider2D >> GEvent." + event + " @ " + millis());
-} //_CODE_:input2D:828822:
-
-public void extraInputChanged(GTextField source, GEvent event) { //_CODE_:extraInput:426148:
-  //println("textfield1 - GTextField >> GEvent." + event + " @ " + millis());
-} //_CODE_:extraInput:426148:
-
-public void typeSelected(GDropList source, GEvent event) { //_CODE_:typeList:967986:
-  //println("typeList - GDropList >> GEvent." + event + " @ " + millis());
-} //_CODE_:typeList:967986:
-
-public void fieldChanged(GDropList source, GEvent event) { //_CODE_:fieldList:888386:
-  
-  switch(fieldList.getSelectedText()){
-    case "Name":
-    case "Mass":
-    case "Radius":
-    case "Position":
-    case "Velocity":
-    case "Acceleration":
-    case "Type":
-    case "Colour":
-    case "Temperature":
-      
-      break;
-  
-  
-  }
-} //_CODE_:fieldList:888386:
+public void resertClicked(GButton source, GEvent event) { //_CODE_:resetButton:528726:
+  reset();
+} //_CODE_:resetButton:528726:
 
 
 
@@ -172,49 +137,11 @@ public void createGUI(){
   exponentMass.setText("10");
   exponentMass.setOpaque(true);
   exponentMass.addEventHandler(this, "exponentMassChanged");
-  objectProperties = GWindow.getWindow(this, "Object Properties", 0, 180, 270, 180, JAVA2D);
-  objectProperties.noLoop();
-  objectProperties.setActionOnClose(G4P.CLOSE_WINDOW);
-  objectProperties.addDrawHandler(this, "propertiesChanged");
-  inputField = new GTextField(objectProperties, 120, 50, 60, 20, G4P.SCROLLBARS_NONE);
-  inputField.setOpaque(true);
-  inputField.addEventHandler(this, "inputChanged");
-  input2D = new GSlider2D(objectProperties, 120, 100, 60, 60);
-  input2D.setLimitsX(0.5, 0.0, 1.0);
-  input2D.setLimitsY(0.5, 0.0, 1.0);
-  input2D.setNumberFormat(G4P.DECIMAL, 2);
-  input2D.setOpaque(true);
-  input2D.addEventHandler(this, "input2DChanged");
-  extraInput = new GTextField(objectProperties, 190, 50, 60, 20, G4P.SCROLLBARS_NONE);
-  extraInput.setOpaque(true);
-  extraInput.addEventHandler(this, "extraInputChanged");
-  typeList = new GDropList(objectProperties, 190, 100, 60, 80, 3, 20);
-  typeList.setItems(loadStrings("list_967986"), 0);
-  typeList.addEventHandler(this, "typeSelected");
-  ifLabel = new GLabel(objectProperties, 120, 30, 60, 20);
-  ifLabel.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
-  ifLabel.setText("Name");
-  ifLabel.setOpaque(false);
-  eiLabel = new GLabel(objectProperties, 190, 30, 60, 20);
-  eiLabel.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
-  eiLabel.setText("x10^");
-  eiLabel.setOpaque(false);
-  i2dLabel = new GLabel(objectProperties, 120, 80, 60, 20);
-  i2dLabel.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
-  i2dLabel.setText("Velocity");
-  i2dLabel.setOpaque(false);
-  tLabel = new GLabel(objectProperties, 190, 80, 60, 20);
-  tLabel.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
-  tLabel.setText("Type");
-  tLabel.setOpaque(false);
-  optionLabel = new GLabel(objectProperties, 20, 10, 80, 20);
-  optionLabel.setText("Field Options");
-  optionLabel.setOpaque(false);
-  fieldList = new GDropList(objectProperties, 20, 30, 90, 140, 6, 10);
-  fieldList.setItems(loadStrings("list_888386"), 0);
-  fieldList.addEventHandler(this, "fieldChanged");
+  resetButton = new GButton(controlPanel, 20, 70, 80, 20);
+  resetButton.setText("RESET");
+  resetButton.setLocalColorScheme(GCScheme.GOLD_SCHEME);
+  resetButton.addEventHandler(this, "resertClicked");
   controlPanel.loop();
-  objectProperties.loop();
 }
 
 // Variable declarations 
@@ -233,14 +160,4 @@ GTextField spawnRadius;
 GTextField spawnMass; 
 GLabel exponentMassLabel; 
 GTextField exponentMass; 
-GWindow objectProperties;
-GTextField inputField; 
-GSlider2D input2D; 
-GTextField extraInput; 
-GDropList typeList; 
-GLabel ifLabel; 
-GLabel eiLabel; 
-GLabel i2dLabel; 
-GLabel tLabel; 
-GLabel optionLabel; 
-GDropList fieldList; 
+GButton resetButton; 
