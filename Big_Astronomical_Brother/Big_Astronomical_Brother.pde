@@ -2,11 +2,11 @@ import g4p_controls.*;
 
 float scalingFactor = pow(10, -9);  
 float timeStep = 60;
-//float collisionDampening = 10;
+PVector scalingDimensions = new PVector(600, 600);
 
 ArrayList<CelestialObject> celestialObjects;
 ArrayList<CelestialObject> deleteCache;
-CelestialObject object = new CelestialObject(0, 0, new PVector(0, 0), new PVector(0, 0), new PVector(0, 0), 0, "");
+CelestialObject object = new CelestialObject("", 0, 0, new PVector(0, 0), new PVector(0, 0), new PVector(0, 0), 0, "");
 
 JSONArray data;
 
@@ -30,12 +30,12 @@ void reset() {
   deleteCache = new ArrayList<CelestialObject>();
   celestialObjects = new ArrayList<CelestialObject> () {{
 
-    add(new Star(1.989 * pow(10, 30), 69.634, center, new PVector(0, 0), new PVector(0, 0), color(255, 255, 0), "gas", 5600));
+    add(new Star("Sun", 1.989 * pow(10, 30), 69.634, center, new PVector(0, 0), new PVector(0, 0), color(255, 255, 0), "gas", 5600));
       
     for (int i = 0; i < 8; i++) {
       
       JSONObject selectedPlanet = data.getJSONObject(i);
-      //String name = selectedPlanet.getString("name");
+      String name = selectedPlanet.getString("name");
       float mass = selectedPlanet.getFloat("mass");
       float radius = selectedPlanet.getFloat("radius");
       PVector distance = PVector.add(center, new PVector(sqrt(pow(selectedPlanet.getFloat("distance"), 2) / 2), sqrt(pow(selectedPlanet.getFloat("distance"), 2) / 2)));
@@ -45,7 +45,7 @@ void reset() {
       
       String type = selectedPlanet.getString("type");
       
-      add(new Planet(mass * pow(10, 24), radius, distance, startingVelocities[i], new PVector(0, 0), planetColor, type));
+      add(new Planet(name, mass * pow(10, 24), radius, distance, startingVelocities[i], new PVector(0, 0), planetColor, type));
     
     }
     
@@ -58,7 +58,17 @@ void setup() {
   size(600, 600);
   //noLoop();
   createGUI();
+  
   objectProperties.setVisible(false);
+  extraInput.setVisible(false);
+  input2D.setVisible(false);
+  typeList.setVisible(false);
+  
+  eiLabel.setVisible(false);
+  i2dLabel.setVisible(false);
+  tLabel.setVisible(false);
+  
+  ifLabel.setText("Name");
   
   spawnRadius.setNumeric(1.0, 5.0, 1.0);
   spawnMass.setNumeric(0.1, 9.9, 1.0);
@@ -103,22 +113,38 @@ void mousePressed(){
   if (!mouseOverObject) {
     
     objectProperties.setVisible(false);
-    object = new CelestialObject(0, 0, new PVector(0, 0), new PVector(0, 0), new PVector(0, 0), 0, "");
+    object = new CelestialObject("", 0, 0, new PVector(0, 0), new PVector(0, 0), new PVector(0, 0), 0, "");
 
     switch (spawnedObject.getSelectedText()) {
       case "Asteroid":
-        celestialObjects.add(new Asteroid(spawnMass.getValueF() * pow(10, exponentMass.getValueF()), spawnRadius.getValueF(), mousePos, new PVector(velocity.getValueXF(), velocity.getValueYF()), new PVector(0, 0), color(150, 150, 150), "solid"));
+        celestialObjects.add(new Asteroid("", spawnMass.getValueF() * pow(10, exponentMass.getValueF()), spawnRadius.getValueF(), mousePos, new PVector(spawnVelocity.getValueXF(), spawnVelocity.getValueYF()), new PVector(0, 0), color(150, 150, 150), "solid"));
         break;
        case "Planet":
-         celestialObjects.add(new Planet(spawnMass.getValueF() * pow(10, exponentMass.getValueF()), spawnRadius.getValueF(), mousePos, new PVector(velocity.getValueXF(), velocity.getValueYF()), new PVector(0, 0), color(100, 100, 200), "solid"));
+         celestialObjects.add(new Planet("", spawnMass.getValueF() * pow(10, exponentMass.getValueF()), spawnRadius.getValueF(), mousePos, new PVector(spawnVelocity.getValueXF(), spawnVelocity.getValueYF()), new PVector(0, 0), color(100, 100, 200), "solid"));
          break;
        case "Star":
-         celestialObjects.add(new Star(spawnMass.getValueF() * pow(10, exponentMass.getValueF()), spawnRadius.getValueF(), mousePos, new PVector(velocity.getValueXF(), velocity.getValueYF()), new PVector(0, 0), color(255, 255, 0), "gas", 5600));
+         celestialObjects.add(new Star("", spawnMass.getValueF() * pow(10, exponentMass.getValueF()), spawnRadius.getValueF(), mousePos, new PVector(spawnVelocity.getValueXF(), spawnVelocity.getValueYF()), new PVector(0, 0), color(255, 255, 0), "gas", 5600));
          break;
     }
   }
   else {
-    objectProperties.setVisible(true);
-    object.isSelected = true;
+    switch (object.getClass().getName()){
+      case "Asteroid":
+
+      case "Planet":
+      
+
+        
+        break;
+      case "Star":
+         
+         
+        
+        break;
+    }
+    object.displayProperties();
   }
+      
+      
+  
 }
