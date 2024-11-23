@@ -6,6 +6,7 @@ float timeStep = 60;
 
 ArrayList<CelestialObject> celestialObjects;
 ArrayList<CelestialObject> deleteCache;
+CelestialObject object = new CelestialObject(0, 0, new PVector(0, 0), new PVector(0, 0), new PVector(0, 0), 0, "");
 
 JSONArray data;
 
@@ -74,10 +75,7 @@ void draw() {
 
   for (CelestialObject co : celestialObjects) {
     co.display();
-    co.update();
-    
-    
-    
+    co.update(); 
   }
   
   for (CelestialObject del : deleteCache){
@@ -92,12 +90,12 @@ void mousePressed(){
   
   boolean mouseOverObject = false;
   PVector mousePos = new PVector(mouseX, mouseY); 
-  CelestialObject targetObject = null;
+  object.isSelected = false;
   
   for (CelestialObject co : celestialObjects) {
-    if (PVector.dist(mousePos, co.pos) < co.radius*co.visualScaling) {
+    if (PVector.dist(mousePos, co.pos) < co.radius * co.visualScaling) {
       mouseOverObject = true;
-      targetObject = co;
+      object = co;
       break;
     }
   }
@@ -105,10 +103,8 @@ void mousePressed(){
   if (!mouseOverObject) {
     
     objectProperties.setVisible(false);
-    if (targetObject != null) for (int i = 0; i < celestialObjects.size(); i++) if (celestialObjects.get(i) == targetObject){
-       celestialObjects.get(i).stroke = color(0);
-    }
-    
+    object = new CelestialObject(0, 0, new PVector(0, 0), new PVector(0, 0), new PVector(0, 0), 0, "");
+
     switch (spawnedObject.getSelectedText()) {
       case "Asteroid":
         celestialObjects.add(new Asteroid(spawnMass.getValueF() * pow(10, exponentMass.getValueF()), spawnRadius.getValueF(), mousePos, new PVector(velocity.getValueXF(), velocity.getValueYF()), new PVector(0, 0), color(150, 150, 150), "solid"));
@@ -120,29 +116,9 @@ void mousePressed(){
          celestialObjects.add(new Star(spawnMass.getValueF() * pow(10, exponentMass.getValueF()), spawnRadius.getValueF(), mousePos, new PVector(velocity.getValueXF(), velocity.getValueYF()), new PVector(0, 0), color(255, 255, 0), "gas", 5600));
          break;
     }
-  } 
-  
+  }
   else {
-    
     objectProperties.setVisible(true);
-    if (targetObject != null) for (int i = 0; i < celestialObjects.size(); i++) if (celestialObjects.get(i) == targetObject){
-      celestialObjects.get(i).stroke = lerpColor(targetObject.col, color(255), 0.33);
-    }
-      
-    if (targetObject != null){
-      
-        switch (targetObject.getClass().getName()){
-          
-          case "Planet":
-            //don't add break here
-          case "Asteroid":
-    
-            break;
-          case "Star":
-            break;
-        }
-      
-      }
-    }
-
+    object.isSelected = true;
+  }
 }

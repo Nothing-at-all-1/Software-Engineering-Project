@@ -5,6 +5,7 @@ class CelestialObject {
   color col;
   String type;
   color stroke = color(0);
+  boolean isSelected = false;
   //Intializes the variables when it is created
   CelestialObject(float m, float r, PVector p, PVector v, PVector a, color c, String t) {
     this.mass = m;
@@ -93,7 +94,6 @@ class CelestialObject {
               }
               break;
           }
-          
         }
       }
     }
@@ -101,9 +101,15 @@ class CelestialObject {
   
   void display() {
     fill(col);
+    if (!isSelected) {
+      stroke = 0;
+    }
+    else {
+      stroke = 255;
+    }
     stroke(stroke);
     strokeWeight( radius * visualScaling / 10f);
     ellipse(pos.x, pos.y, radius * 2*visualScaling, radius * 2*visualScaling);
   }
-  
+    
 }

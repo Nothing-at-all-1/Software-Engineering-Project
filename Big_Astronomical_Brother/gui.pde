@@ -141,10 +141,10 @@ public void createGUI(){
   objectProperties.noLoop();
   objectProperties.setActionOnClose(G4P.CLOSE_WINDOW);
   objectProperties.addDrawHandler(this, "propertiesChanged");
-  radius = new GLabel(objectProperties, 20, 20, 60, 20);
-  radius.setText("finish this later");
-  radius.setTextBold();
-  radius.setOpaque(false);
+  name = new GLabel(objectProperties, 29, 5, 60, 20);
+  name.setText("Name");
+  name.setTextBold();
+  name.setOpaque(false);
   controlPanel.loop();
   objectProperties.loop();
 }
@@ -166,4 +166,4 @@ GTextField spawnMass;
 GLabel exponentMassLabel; 
 GTextField exponentMass; 
 GWindow objectProperties;
-GLabel radius; 
+GLabel name; 
