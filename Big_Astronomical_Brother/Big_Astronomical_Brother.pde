@@ -2,18 +2,15 @@ import g4p_controls.*;
 
 float scalingFactor = pow(10, -9);  
 float timeStep = 60;
-PVector scalingDimensions = new PVector(600, 600);
 
-int numAsteroids = 10; //THIS WILL DECREASE THE FRAMERATE, DOESN'T WORK WELL WITH TIMESTEP
+int numAsteroids = 100; //THIS WILL DECREASE THE FRAMERATE, DOESN'T WORK WELL WITH TIMESTEP AFTER A CERTAIN POINT
 
 ArrayList<CelestialObject> celestialObjects;
 ArrayList<CelestialObject> deleteCache;
-CelestialObject object = new CelestialObject("", 0, 0, new PVector(0, 0), new PVector(0, 0), new PVector(0, 0), 0, "");
 
 JSONArray data;
 
 void reset() {
-  
   
   PVector[] startingVelocities = {  //these are largely arbitrary
     new PVector(1, -1),
@@ -50,17 +47,17 @@ void reset() {
       
       add(new Planet(name, mass * pow(10, 24), radius, distance, startingVelocities[i], new PVector(0, 0), planetColor, type));
       
-      float beltDistance = 329;
+    }
+    
+    float beltDistance = 329;
 
-      for (int j = 0; j < numAsteroids; j++) {
-  
-        float angle = j * TWO_PI / numAsteroids;
-        PVector velocity = new PVector(-sin(angle) * 0.65, cos(angle) * 0.65); 
-        PVector position = PVector.sub(center, new PVector(cos(angle), sin(angle)).mult(beltDistance + random(150)));
-        
-        add(new Asteroid("", random(0.1, 1.0) * pow(10, 15), random(0.5, 2), position, velocity, new PVector(0, 0), color(150, 150, 150), "solid"));
-      }
+    for (int j = 0; j < numAsteroids; j++) {
+
+      float angle = j * TWO_PI / numAsteroids * random(10);
+      PVector velocity = new PVector(-sin(angle) * 0.65, cos(angle) * 0.65); 
+      PVector position = PVector.sub(center, new PVector(cos(angle), sin(angle)).mult(beltDistance + random(150)));
       
+      add(new Asteroid("", random(0.1, 1.0) * pow(10, 15), random(0.5, 2), position, velocity, new PVector(0, 0), color(150, 150, 150), "solid"));
     }
     
   }};
@@ -106,7 +103,6 @@ void mousePressed(){
   
   boolean mouseOverObject = false;
   PVector mousePos = new PVector(mouseX, mouseY); 
-  object.isSelected = false;
   
   for (CelestialObject co : celestialObjects) {
     if (PVector.dist(mousePos, co.pos) < co.radius * co.visualScaling) {
@@ -130,6 +126,7 @@ void mousePressed(){
        case "Star":
          celestialObjects.add(new Star("", spawnMass.getValueF() * pow(10, exponentMass.getValueF()), spawnRadius.getValueF(), mousePos, new PVector(spawnVelocity.getValueXF(), spawnVelocity.getValueYF()), new PVector(0, 0), color(255, 255, 0), "gas", 5600));
          break;
+         
     }
   }
   

@@ -1,11 +1,10 @@
 class CelestialObject {
   //fields that Asteroid, Star and Planet class also hold
-  float mass, radius, visualScaling, strokeWeight;  
+  float mass, radius, visualScaling, strokeWeight, temp;  
   PVector pos, vel, acc;
   color col;
   String type, name;
-  color stroke = color(0);
-  boolean isSelected = false;
+
   //Intializes the variables when it is created
   CelestialObject(String n, float m, float r, PVector p, PVector v, PVector a, color c, String t) {
     this.name = n;
@@ -79,6 +78,7 @@ class CelestialObject {
                 //other.radius = floor(other.radius/1.1);
                 deleteCache.add(other);
                 this.radius *= pow(massRatio, 0.8);
+                if (this.getClass().getName().equals( "Star" )) {this.temp = sqrt((this.temp + other.temp)/this.temp); println(temp);}
               }
               break;
             
@@ -90,10 +90,7 @@ class CelestialObject {
   
   void display() {
     fill(col);
-    stroke = isSelected?lerpColor(this.col, color(255), 0.5):color(0);
-    stroke(stroke);
-    strokeWeight = isSelected?max(radius * visualScaling / 10f, 3):0;
-    strokeWeight(strokeWeight);
+    noStroke();
     ellipse(pos.x, pos.y, radius * 2*visualScaling, radius * 2*visualScaling);
   }
     

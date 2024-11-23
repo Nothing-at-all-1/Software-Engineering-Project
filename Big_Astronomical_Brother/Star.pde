@@ -1,7 +1,4 @@
 class Star extends CelestialObject{
-  
-  //add temp as a field for this subclass only
-  float temp;
 
   Star(String n, float m, float r, PVector p, PVector v, PVector a, color c, String type, float t){
     super(n, m, r, p, v, a, c, type);
@@ -18,5 +15,7 @@ class Star extends CelestialObject{
     
     this.visualScaling = 0.5;
   }
+  
+  
   
 }
