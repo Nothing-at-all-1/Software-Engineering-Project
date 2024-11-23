@@ -13,7 +13,7 @@ class Asteroid extends CelestialObject{
     beginShape();
     for (float i = 0; i < verticies; i++){
       float angle = i * PI * verticies;
-      curveVertex(pos.x + sin(angle) * radius, pos.y + cos(angle) * radius);
+      curveVertex(pos.x + sin(angle) * radius, pos.y + cos(angle) * radius);    //generates unique shapes for the asteroids
     }
     endShape();
   }

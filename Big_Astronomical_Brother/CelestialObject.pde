@@ -75,10 +75,9 @@ class CelestialObject {
                 mass += other.mass;
                 other.mass = 0;
                 other.radius = 0;
-                //other.radius = floor(other.radius/1.1);
                 deleteCache.add(other);
                 this.radius *= pow(massRatio, 0.8);
-                if (this.getClass().getName().equals( "Star" )) {this.temp = sqrt((this.temp + other.temp)/this.temp); println(temp);}
+                this.temp *= sqrt((this.temp + other.temp)/this.temp); 
               }
               break;
             

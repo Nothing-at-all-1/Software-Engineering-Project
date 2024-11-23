@@ -3,19 +3,20 @@ class Star extends CelestialObject{
   Star(String n, float m, float r, PVector p, PVector v, PVector a, color c, String type, float t){
     super(n, m, r, p, v, a, c, type);
     this.temp = t;
-    float colorMod = norm(constrain(temp, 2000, 30000), 2000, 30000);
+    this.visualScaling = 0.5;
+  }
+  
+  void display(){
+    float colorMod = norm(constrain(temp, 2000, 30000), 2000, 30000);    //this is just so it works for the normalize, it isn't technically accruate i guess?
     
-    color blue = color(175, 201, 255);
+    color blue = color(175, 201, 255);    //stolen rgb codes for this
     
     color yellow = color(255, 166, 81);
     
     color emission = lerpColor(yellow, blue, colorMod);
     
     this.col = emission;
-    
-    this.visualScaling = 0.5;
+    super.display();
   }
-  
-  
   
 }
