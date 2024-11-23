@@ -1,14 +1,12 @@
 import g4p_controls.*;
 
-float scalingFactor = pow(10, -9);  
+float scalingFactor = pow(10, -9);    //you're not really supposed to change this
 float timeStep = 60;
 
-int numAsteroids = 100; //THIS WILL DECREASE THE FRAMERATE, DOESN'T WORK WELL WITH TIMESTEP AFTER A CERTAIN POINT
+ArrayList<CelestialObject> celestialObjects;    //array of everything
+ArrayList<CelestialObject> deleteCache;    //i couldn't thinkof an easier way to do this
 
-ArrayList<CelestialObject> celestialObjects;
-ArrayList<CelestialObject> deleteCache;
-
-JSONArray data;
+JSONArray data;    //initialize the json array
 
 void reset() {
   
@@ -50,6 +48,7 @@ void reset() {
     }
     
     float beltDistance = 329;
+    int numAsteroids = (int) random(110, 190);
 
     for (int j = 0; j < numAsteroids; j++) {
 
